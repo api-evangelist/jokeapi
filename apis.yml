@@ -1,0 +1,32 @@
+aid: jokeapi
+name: JokeAPI
+description: "Programming, Miscellaneous and Dark Jokes"
+url: https://sv443.net/jokeapi/v2/
+specificationVersion: '0.20'
+created: '2026-05-28'
+modified: '2026-05-28'
+x-source: public-apis/public-apis
+x-category: "Games & Comics"
+x-tier: 3
+x-tier-reason: bulk-registered-from-public-apis
+tags:
+  - Games And Comics
+  - Public APIs
+apis:
+  - name: JokeAPI
+    description: "Programming, Miscellaneous and Dark Jokes"
+    humanURL: https://sv443.net/jokeapi/v2/
+    baseURL: https://sv443.net/jokeapi/v2/
+    tags:
+      - Games And Comics
+    properties:
+      - type: Documentation
+        url: https://sv443.net/jokeapi/v2/
+common:
+  - type: Website
+    url: https://sv443.net/jokeapi/v2/
+  - type: PublicAPIsListing
+    url: https://github.com/public-apis/public-apis
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
