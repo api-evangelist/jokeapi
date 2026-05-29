@@ -1,0 +1,71 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: JokeAPI
+providerId: jokeapi
+created: '2026-05-29'
+modified: '2026-05-29'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Jokes
+  - Humor
+  - Open Source
+description: >-
+  JokeAPI enforces rate limits per IP address (no API keys, no accounts).
+  Standard endpoints allow 120 requests per minute per IP. The /submit
+  endpoint has a stricter 5-per-minute ceiling to discourage spammed
+  submissions. Limits are hard — there is no paid raise — but operators
+  can self-host the open-source codebase to remove them entirely.
+sources:
+  - https://jokeapi.dev/
+  - https://github.com/Sv443-Network/JokeAPI/blob/main/changelog.md
+headers:
+  retryAfter: Retry-After
+  rateLimitLimit: RateLimit-Limit
+  rateLimitRemaining: RateLimit-Remaining
+  rateLimitReset: RateLimit-Reset
+responseCodes:
+  throttled: 429
+limits:
+  - name: Standard endpoints
+    scope: IP
+    metric: requests_per_minute
+    limit: 120
+    timeFrame: minute
+    notes: >-
+      Applies to /joke/{category} and every read endpoint (/categories,
+      /flags, /formats, /languages, /langcode/{language}, /info,
+      /endpoints, /ping). Counter is per requesting IP.
+  - name: Joke submissions
+    scope: IP
+    metric: requests_per_minute
+    limit: 5
+    timeFrame: minute
+    notes: >-
+      Applies to POST /submit. Stricter ceiling to discourage spam.
+      Honoured even when ?dry-run is set.
+policies:
+  - name: No API keys
+    description: >-
+      There are no API keys or accounts. Rate limits are enforced on the
+      requesting IP address. CDN-fronted clients (especially mobile and
+      shared NAT environments) may share a single budget.
+  - name: Honour Retry-After
+    description: >-
+      On a 429 response, clients SHOULD wait the number of seconds
+      indicated by the Retry-After header before retrying. The
+      RateLimit-Reset header reports the absolute reset timestamp.
+  - name: Backoff on 429
+    description: >-
+      Implement exponential backoff with jitter when retrying after a
+      429. Do not hot-loop — the burst budget is small and shared.
+  - name: Self-host to remove limits
+    description: >-
+      Operators with high-volume needs can clone the MIT-licensed source
+      from git.sv443.net (mirrored on GitHub) and host their own
+      instance with whatever (or no) rate limit applied.
+  - name: CORS-friendly
+    description: >-
+      CORS is enabled so browser clients can call the API directly.
+      Be aware that browser-side calls hit the user's IP budget.

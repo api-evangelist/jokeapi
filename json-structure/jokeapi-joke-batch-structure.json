@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-structure/jokeapi-joke-batch-structure.json",
+  "name": "JokeBatch",
+  "description": "Envelope returned when `?amount` is greater than 1.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "boolean",
+      "example": false
+    },
+    "amount": {
+      "type": "int32",
+      "description": "Number of jokes in this batch.",
+      "example": 3
+    },
+    "jokes": {
+      "type": "array",
+      "description": "Heterogeneous list of single and twopart jokes.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "A joke delivered as one line of text.",
+            "properties": {
+              "error": {
+                "type": "boolean",
+                "description": "Always false on a successful joke response.",
+                "example": false
+              },
+              "category": {
+                "type": "string",
+                "description": "Category the joke belongs to.",
+                "enum": [
+                  "Misc",
+                  "Programming",
+                  "Dark",
+                  "Pun",
+                  "Spooky",
+                  "Christmas"
+                ],
+                "example": "Programming"
+              },
+              "type": {
+                "type": "string",
+                "description": "Joke shape \u2014 always `single` for this schema.",
+                "enum": [
+                  "single"
+                ],
+                "example": "single"
+              },
+              "joke": {
+                "type": "string",
+                "description": "The joke text.",
+                "example": "Why do programmers prefer dark mode? Because light attracts bugs."
+              },
+              "flags": {
+                "type": "object",
+                "description": "Content classification flags carried on every joke.",
+                "properties": {
+                  "nsfw": {
+                    "type": "boolean",
+                    "description": "Joke contains adult or explicit sexual content.",
+                    "example": false
+                  },
+                  "religious": {
+                    "type": "boolean",
+                    "description": "Joke references or mocks religion.",
+                    "example": false
+                  },
+                  "political": {
+                    "type": "boolean",
+                    "description": "Joke references politics or political figures.",
+                    "example": false
+                  },
+                  "racist": {
+                    "type": "boolean",
+                    "description": "Joke contains racist content.",
+                    "example": false
+                  },
+                  "sexist": {
+                    "type": "boolean",
+                    "description": "Joke contains sexist content.",
+                    "example": false
+                  },
+                  "explicit": {
+                    "type": "boolean",
+                    "description": "Joke contains explicit language unrelated to NSFW.",
+                    "example": false
+                  }
+                },
+                "required": [
+                  "nsfw",
+                  "religious",
+                  "political",
+                  "racist",
+                  "sexist",
+                  "explicit"
+                ]
+              },
+              "id": {
+                "type": "int32",
+                "description": "Joke identifier within its language scope.",
+                "example": 42
+              },
+              "safe": {
+                "type": "boolean",
+                "description": "True when the joke has no flags and is not Dark.",
+                "example": true
+              },
+              "lang": {
+                "type": "string",
+                "description": "ISO 639-1 language code of the joke.",
+                "example": "en"
+              }
+            },
+            "required": [
+              "error",
+              "category",
+              "type",
+              "joke",
+              "flags",
+              "id",
+              "safe",
+              "lang"
+            ]
+          },
+          {
+            "type": "object",
+            "description": "A joke delivered as a setup/delivery pair.",
+            "properties": {
+              "error": {
+                "type": "boolean",
+                "description": "Always false on a successful joke response.",
+                "example": false
+              },
+              "category": {
+                "type": "string",
+                "description": "Category the joke belongs to.",
+                "enum": [
+                  "Misc",
+                  "Programming",
+                  "Dark",
+                  "Pun",
+                  "Spooky",
+                  "Christmas"
+                ],
+                "example": "Programming"
+              },
+              "type": {
+                "type": "string",
+                "description": "Joke shape \u2014 always `twopart` for this schema.",
+                "enum": [
+                  "twopart"
+                ],
+                "example": "twopart"
+              },
+              "setup": {
+                "type": "string",
+                "description": "Setup line of the joke.",
+                "example": "Why don't programmers like nature?"
+              },
+              "delivery": {
+                "type": "string",
+                "description": "Punchline of the joke.",
+                "example": "It has too many bugs."
+              },
+              "flags": {
+                "type": "object",
+                "description": "Content classification flags carried on every joke.",
+                "properties": {
+                  "nsfw": {
+                    "type": "boolean",
+                    "description": "Joke contains adult or explicit sexual content.",
+                    "example": false
+                  },
+                  "religious": {
+                    "type": "boolean",
+                    "description": "Joke references or mocks religion.",
+                    "example": false
+                  },
+                  "political": {
+                    "type": "boolean",
+                    "description": "Joke references politics or political figures.",
+                    "example": false
+                  },
+                  "racist": {
+                    "type": "boolean",
+                    "description": "Joke contains racist content.",
+                    "example": false
+                  },
+                  "sexist": {
+                    "type": "boolean",
+                    "description": "Joke contains sexist content.",
+                    "example": false
+                  },
+                  "explicit": {
+                    "type": "boolean",
+                    "description": "Joke contains explicit language unrelated to NSFW.",
+                    "example": false
+                  }
+                },
+                "required": [
+                  "nsfw",
+                  "religious",
+                  "political",
+                  "racist",
+                  "sexist",
+                  "explicit"
+                ]
+              },
+              "id": {
+                "type": "int32",
+                "description": "Joke identifier within its language scope.",
+                "example": 127
+              },
+              "safe": {
+                "type": "boolean",
+                "description": "True when the joke has no flags and is not Dark.",
+                "example": true
+              },
+              "lang": {
+                "type": "string",
+                "description": "ISO 639-1 language code of the joke.",
+                "example": "en"
+              }
+            },
+            "required": [
+              "error",
+              "category",
+              "type",
+              "setup",
+              "delivery",
+              "flags",
+              "id",
+              "safe",
+              "lang"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "error",
+    "amount",
+    "jokes"
+  ]
+}

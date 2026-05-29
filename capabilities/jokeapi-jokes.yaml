@@ -1,0 +1,197 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  label: "JokeAPI — Jokes"
+  description: >-
+    JokeAPI — Jokes. 2 operations. Lead operation: JokeAPI Get Joke by Category.
+    Self-contained Naftiko capability covering one JokeAPI business surface —
+    retrieving jokes from any of seven categories with full filter support and
+    submitting new jokes for moderator review.
+  tags:
+    - JokeAPI
+    - Jokes
+    - Humor
+  created: "2026-05-29"
+  modified: "2026-05-29"
+
+binds: []
+
+capability:
+
+  # ── 1. Consumes — the upstream HTTP API this capability speaks to ─────
+  consumes:
+    - type: http
+      namespace: "jokeapi-jokes"
+      baseUri: "https://v2.jokeapi.dev"
+      description: "JokeAPI v2 — Jokes business capability. Self-contained, no shared references. No authentication required."
+      resources:
+        - name: "joke"
+          path: "/joke/{category}"
+          operations:
+            - name: "getJoke"
+              method: GET
+              description: "Retrieve one or more jokes from a single category, comma-separated categories, or `Any`."
+              inputParameters:
+                - name: "category"
+                  in: path
+                  type: string
+                  required: true
+                  description: "Category or comma-separated list. Use `Any` to draw from all categories."
+                - name: "format"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Response format: json, xml, yaml, or txt."
+                - name: "lang"
+                  in: query
+                  type: string
+                  required: false
+                  description: "ISO 639-1 joke language code (en, de, cs, es, fr, pt)."
+                - name: "blacklistFlags"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Comma-separated flags to exclude (nsfw, religious, political, racist, sexist, explicit)."
+                - name: "type"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by joke type — single or twopart."
+                - name: "contains"
+                  in: query
+                  type: string
+                  required: false
+                  description: "URL-encoded substring the joke must contain."
+                - name: "idRange"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Inclusive ID range like `0-50` or single ID like `42`."
+                - name: "amount"
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of jokes to retrieve (1-10)."
+                - name: "safe-mode"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Empty value enables safe mode (excludes any flagged joke and the Dark category)."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "submit"
+          path: "/submit"
+          operations:
+            - name: "submitJoke"
+              method: POST
+              description: "Submit a joke for moderator review. Rate-limited at 5 submissions per minute per IP."
+              inputParameters:
+                - name: "format"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Response format: json, xml, yaml, or txt."
+                - name: "dry-run"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Empty value validates the payload shape without persisting."
+                - name: "body"
+                  in: body
+                  type: object
+                  required: true
+                  description: "Joke submission payload (formatVersion 3)."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  # ── 2. REST exposer — required default ─────────────────────────────────
+  exposes:
+    - type: rest
+      namespace: "jokeapi-jokes-rest"
+      port: 8080
+      description: "REST adapter for JokeAPI — Jokes. One Spectral-compliant resource per consumed operation, prefixed with /v1."
+      resources:
+        - path: "/v1/jokes/{category}"
+          name: "jokes"
+          description: "REST surface for retrieving jokes by category."
+          operations:
+            - method: GET
+              name: "getJoke"
+              description: "Retrieve one or more jokes from a single category, comma-separated categories, or `Any`."
+              call: "jokeapi-jokes.getJoke"
+              with:
+                category: "rest.category"
+                format: "rest.format"
+                lang: "rest.lang"
+                blacklistFlags: "rest.blacklistFlags"
+                type: "rest.type"
+                contains: "rest.contains"
+                idRange: "rest.idRange"
+                amount: "rest.amount"
+                "safe-mode": "rest.safe-mode"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/joke-submissions"
+          name: "joke-submissions"
+          description: "REST surface for submitting a joke for moderator review."
+          operations:
+            - method: POST
+              name: "submitJoke"
+              description: "Submit a joke for moderator review."
+              call: "jokeapi-jokes.submitJoke"
+              with:
+                format: "rest.format"
+                "dry-run": "rest.dry-run"
+                body: "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    # ── 3. MCP exposer — required default ────────────────────────────────
+    - type: mcp
+      namespace: "jokeapi-jokes-mcp"
+      port: 9090
+      transport: http
+      description: "MCP adapter for JokeAPI — Jokes. One tool per consumed operation, routed inline through this capability's consumes block."
+      tools:
+        - name: "get-joke"
+          description: "Retrieve one or more jokes from a single category, comma-separated categories, or `Any`."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "jokeapi-jokes.getJoke"
+          with:
+            category: "tools.category"
+            format: "tools.format"
+            lang: "tools.lang"
+            blacklistFlags: "tools.blacklistFlags"
+            type: "tools.type"
+            contains: "tools.contains"
+            idRange: "tools.idRange"
+            amount: "tools.amount"
+            "safe-mode": "tools.safe-mode"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "submit-joke"
+          description: "Submit a joke for moderator review."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "jokeapi-jokes.submitJoke"
+          with:
+            format: "tools.format"
+            "dry-run": "tools.dry-run"
+            body: "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."

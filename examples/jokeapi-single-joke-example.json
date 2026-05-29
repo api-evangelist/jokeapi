@@ -1,0 +1,17 @@
+{
+  "error": false,
+  "category": "Programming",
+  "type": "single",
+  "joke": "Why do programmers prefer dark mode? Because light attracts bugs.",
+  "flags": {
+    "nsfw": false,
+    "religious": false,
+    "political": false,
+    "racist": false,
+    "sexist": false,
+    "explicit": false
+  },
+  "id": 42,
+  "safe": true,
+  "lang": "en"
+}

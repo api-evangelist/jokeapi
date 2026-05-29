@@ -1,0 +1,222 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "jokeapi": "https://jokeapi.dev/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "JokeFlags": "jokeapi:JokeFlags",
+    "SingleJoke": "jokeapi:SingleJoke",
+    "TwopartJoke": "jokeapi:TwopartJoke",
+    "JokeBatch": "jokeapi:JokeBatch",
+    "CategoriesResponse": "jokeapi:CategoriesResponse",
+    "FlagsResponse": "jokeapi:FlagsResponse",
+    "FormatsResponse": "jokeapi:FormatsResponse",
+    "LanguagesResponse": "jokeapi:LanguagesResponse",
+    "LangcodeResponse": "jokeapi:LangcodeResponse",
+    "InfoResponse": "jokeapi:InfoResponse",
+    "EndpointsResponse": "jokeapi:EndpointsResponse",
+    "PingResponse": "jokeapi:PingResponse",
+    "JokeSubmission": "jokeapi:JokeSubmission",
+    "SubmissionResponse": "jokeapi:SubmissionResponse",
+    "alias": {
+      "@id": "jokeapi:alias",
+      "@type": "xsd:string"
+    },
+    "amount": {
+      "@id": "jokeapi:amount",
+      "@type": "xsd:integer"
+    },
+    "categories": {
+      "@id": "jokeapi:categories",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "jokeapi:category",
+      "@type": "xsd:string"
+    },
+    "categoryAliases": {
+      "@id": "jokeapi:categoryAliases",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "code": {
+      "@id": "jokeapi:code",
+      "@type": "xsd:string"
+    },
+    "count": {
+      "@id": "jokeapi:count",
+      "@type": "xsd:integer"
+    },
+    "defaultLanguage": {
+      "@id": "jokeapi:defaultLanguage",
+      "@type": "xsd:string"
+    },
+    "delivery": {
+      "@id": "jokeapi:delivery",
+      "@type": "xsd:string"
+    },
+    "endpoints": {
+      "@id": "jokeapi:endpoints",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "error": {
+      "@id": "jokeapi:error",
+      "@type": "xsd:boolean"
+    },
+    "explicit": {
+      "@id": "jokeapi:explicit",
+      "@type": "xsd:boolean"
+    },
+    "flags": {
+      "@id": "jokeapi:flags",
+      "@type": "@id"
+    },
+    "formatVersion": {
+      "@id": "jokeapi:formatVersion",
+      "@type": "xsd:integer"
+    },
+    "formats": {
+      "@id": "jokeapi:formats",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "jokeapi:id",
+      "@type": "xsd:integer"
+    },
+    "idRange": {
+      "@id": "jokeapi:idRange",
+      "@type": "@id"
+    },
+    "info": {
+      "@id": "jokeapi:info",
+      "@type": "xsd:string"
+    },
+    "joke": {
+      "@id": "jokeapi:joke",
+      "@type": "xsd:string"
+    },
+    "jokeLanguages": {
+      "@id": "jokeapi:jokeLanguages",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "jokes": {
+      "@id": "jokeapi:jokes",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "lang": {
+      "@id": "jokeapi:lang",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "jokeapi:message",
+      "@type": "xsd:string"
+    },
+    "method": {
+      "@id": "jokeapi:method",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "nsfw": {
+      "@id": "jokeapi:nsfw",
+      "@type": "xsd:boolean"
+    },
+    "ping": {
+      "@id": "jokeapi:ping",
+      "@type": "xsd:string"
+    },
+    "political": {
+      "@id": "jokeapi:political",
+      "@type": "xsd:boolean"
+    },
+    "possibleLanguages": {
+      "@id": "jokeapi:possibleLanguages",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "racist": {
+      "@id": "jokeapi:racist",
+      "@type": "xsd:boolean"
+    },
+    "religious": {
+      "@id": "jokeapi:religious",
+      "@type": "xsd:boolean"
+    },
+    "resolved": {
+      "@id": "jokeapi:resolved",
+      "@type": "xsd:string"
+    },
+    "safe": {
+      "@id": "jokeapi:safe",
+      "@type": "xsd:boolean"
+    },
+    "safeJokes": {
+      "@id": "jokeapi:safeJokes",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "setup": {
+      "@id": "jokeapi:setup",
+      "@type": "xsd:string"
+    },
+    "sexist": {
+      "@id": "jokeapi:sexist",
+      "@type": "xsd:boolean"
+    },
+    "submission": {
+      "@id": "jokeapi:submission",
+      "@type": "@id"
+    },
+    "submissionURL": {
+      "@id": "jokeapi:submissionURL",
+      "@type": "xsd:string"
+    },
+    "supportedParams": {
+      "@id": "jokeapi:supportedParams",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "systemLanguages": {
+      "@id": "jokeapi:systemLanguages",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "timestamp": {
+      "@id": "jokeapi:timestamp",
+      "@type": "xsd:integer"
+    },
+    "totalCount": {
+      "@id": "jokeapi:totalCount",
+      "@type": "xsd:integer"
+    },
+    "type": {
+      "@id": "jokeapi:type",
+      "@type": "xsd:string"
+    },
+    "types": {
+      "@id": "jokeapi:types",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "xsd:string"
+    },
+    "usage": {
+      "@id": "jokeapi:usage",
+      "@type": "@id"
+    },
+    "version": {
+      "@id": "schema:version",
+      "@type": "xsd:string"
+    }
+  }
+}

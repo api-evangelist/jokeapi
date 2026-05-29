@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-structure/jokeapi-categories-response-structure.json",
+  "name": "CategoriesResponse",
+  "description": "Categories metadata envelope.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "boolean",
+      "example": false
+    },
+    "categories": {
+      "type": "array",
+      "description": "Canonical category names accepted by `/joke/{category}`.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "Any",
+        "Misc",
+        "Programming",
+        "Dark",
+        "Pun",
+        "Spooky",
+        "Christmas"
+      ]
+    },
+    "categoryAliases": {
+      "type": "array",
+      "description": "Aliases that resolve to a canonical category.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "alias": {
+            "type": "string",
+            "example": "Coding"
+          },
+          "resolved": {
+            "type": "string",
+            "example": "Programming"
+          }
+        }
+      }
+    },
+    "timestamp": {
+      "type": "int32",
+      "description": "Server-side Unix epoch timestamp in milliseconds.",
+      "example": 1780051223357
+    }
+  },
+  "required": [
+    "error",
+    "categories",
+    "timestamp"
+  ]
+}

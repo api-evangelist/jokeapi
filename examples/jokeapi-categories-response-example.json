@@ -1,0 +1,19 @@
+{
+  "error": false,
+  "categories": [
+    "Any",
+    "Misc",
+    "Programming",
+    "Dark",
+    "Pun",
+    "Spooky",
+    "Christmas"
+  ],
+  "categoryAliases": [
+    {
+      "alias": "Coding",
+      "resolved": "Programming"
+    }
+  ],
+  "timestamp": 1780051223357
+}

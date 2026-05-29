@@ -1,0 +1,17 @@
+{
+  "formatVersion": 3,
+  "category": "Programming",
+  "type": "twopart",
+  "joke": "Why do programmers prefer dark mode? Because light attracts bugs.",
+  "setup": "Why don't programmers like nature?",
+  "delivery": "It has too many bugs.",
+  "flags": {
+    "nsfw": false,
+    "religious": false,
+    "political": false,
+    "racist": false,
+    "sexist": false,
+    "explicit": false
+  },
+  "lang": "en"
+}

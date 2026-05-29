@@ -1,0 +1,274 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "JokeAPI"
+  description: >-
+    Unified vocabulary for JokeAPI v2 — the operational dimension (one OpenAPI
+    spec, ten operations) and the capability dimension (three Naftiko
+    capabilities exposing both REST and MCP adapters).
+  created: "2026-05-29"
+  modified: "2026-05-29"
+
+# ─────────────────────────────────────────────────────────────────────
+# OPERATIONAL DIMENSION — derived from openapi/jokeapi-openapi.yml
+# ─────────────────────────────────────────────────────────────────────
+operational:
+  apis:
+    - name: JokeAPI v2
+      namespace: jokeapi-v2
+      version: "2.3.3"
+      baseUrl: https://v2.jokeapi.dev
+      status: active
+
+  resources:
+    - name: joke
+      api: jokeapi-v2
+      path: /joke/{category}
+      actions: [get]
+    - name: submit
+      api: jokeapi-v2
+      path: /submit
+      actions: [create]
+    - name: categories
+      api: jokeapi-v2
+      path: /categories
+      actions: [list]
+    - name: flags
+      api: jokeapi-v2
+      path: /flags
+      actions: [list]
+    - name: formats
+      api: jokeapi-v2
+      path: /formats
+      actions: [list]
+    - name: languages
+      api: jokeapi-v2
+      path: /languages
+      actions: [list]
+    - name: langcode
+      api: jokeapi-v2
+      path: /langcode/{language}
+      actions: [resolve]
+    - name: info
+      api: jokeapi-v2
+      path: /info
+      actions: [get]
+    - name: endpoints
+      api: jokeapi-v2
+      path: /endpoints
+      actions: [list]
+    - name: ping
+      api: jokeapi-v2
+      path: /ping
+      actions: [probe]
+
+  actions:
+    - name: get
+      httpMethod: GET
+      pattern: read
+    - name: list
+      httpMethod: GET
+      pattern: read
+    - name: resolve
+      httpMethod: GET
+      pattern: query
+    - name: probe
+      httpMethod: GET
+      pattern: read
+    - name: create
+      httpMethod: POST
+      pattern: write
+
+  schemas:
+    core:
+      - name: SingleJoke
+        properties: [error, category, type, joke, flags, id, safe, lang]
+      - name: TwopartJoke
+        properties: [error, category, type, setup, delivery, flags, id, safe, lang]
+      - name: JokeBatch
+        properties: [error, amount, jokes]
+      - name: JokeFlags
+        properties: [nsfw, religious, political, racist, sexist, explicit]
+      - name: JokeSubmission
+        properties: [formatVersion, category, type, joke, setup, delivery, flags, lang]
+    metadata:
+      - name: CategoriesResponse
+        properties: [error, categories, categoryAliases, timestamp]
+      - name: FlagsResponse
+        properties: [error, flags, timestamp]
+      - name: FormatsResponse
+        properties: [error, formats, timestamp]
+      - name: LanguagesResponse
+        properties: [error, defaultLanguage, jokeLanguages, systemLanguages, possibleLanguages, timestamp]
+      - name: LangcodeResponse
+        properties: [error, code, timestamp]
+      - name: InfoResponse
+        properties: [error, version, jokes, formats, jokeLanguages, systemLanguages, info, timestamp]
+      - name: EndpointsResponse
+        properties: [error, endpoints, timestamp]
+      - name: PingResponse
+        properties: [error, ping, timestamp]
+    errors:
+      - name: JokeError
+        properties: [error, internalError, code, message, causedBy, additionalInfo, timestamp]
+
+  parameters:
+    pagination:
+      - name: amount
+        purpose: Number of jokes to retrieve (1-10)
+    identifiers:
+      - name: category
+        in: path
+      - name: language
+        in: path
+    filters:
+      - name: lang
+        purpose: ISO 639-1 joke language code
+      - name: blacklistFlags
+        purpose: Comma-separated flags to exclude
+      - name: type
+        purpose: Joke type filter (single, twopart)
+      - name: contains
+        purpose: Substring full-text filter
+      - name: idRange
+        purpose: ID range or single ID filter
+      - name: safe-mode
+        purpose: Excludes any flagged joke plus the Dark category
+    format:
+      - name: format
+        purpose: Response format (json, xml, yaml, txt)
+      - name: dry-run
+        purpose: Validate submission without persisting
+
+  enums:
+    categories: [Any, Misc, Programming, Dark, Pun, Spooky, Christmas]
+    flags: [nsfw, religious, political, racist, sexist, explicit]
+    formats: [json, xml, yaml, txt]
+    jokeTypes: [single, twopart]
+    jokeLanguages: [cs, de, en, es, fr, pt]
+    systemLanguages: [cs, de, en, es, pt]
+
+  authentication:
+    scheme: none
+    description: "JokeAPI requires no authentication. Public, unauthenticated, CORS-enabled."
+
+# ─────────────────────────────────────────────────────────────────────
+# CAPABILITY DIMENSION — derived from capabilities/*.yaml
+# ─────────────────────────────────────────────────────────────────────
+capability:
+  workflows:
+    - name: JokeAPI Jokes
+      file: capabilities/jokeapi-jokes.yaml
+      description: "Retrieve jokes from any of seven categories with full filter support and submit new jokes for moderator review."
+      apisCombined: [jokeapi-v2]
+      toolCount: 2
+      personas: [Bot Author, Demo Developer]
+      domains: [Humor]
+    - name: JokeAPI Metadata
+      file: capabilities/jokeapi-metadata.yaml
+      description: "Describe the API surface — categories, flags, formats, languages, and language-name to ISO-code resolution."
+      apisCombined: [jokeapi-v2]
+      toolCount: 5
+      personas: [Demo Developer, Integration Engineer]
+      domains: [Discovery]
+    - name: JokeAPI System
+      file: capabilities/jokeapi-system.yaml
+      description: "Runtime introspection (info), endpoint discovery, and uptime probing."
+      apisCombined: [jokeapi-v2]
+      toolCount: 3
+      personas: [Operator, Monitoring]
+      domains: [Health]
+
+  personas:
+    - id: bot-author
+      name: Bot Author
+      description: Builds chat-bot integrations (Discord, Slack, Teams) that fetch jokes on demand.
+      workflows: [JokeAPI Jokes]
+    - id: demo-developer
+      name: Demo Developer
+      description: Uses JokeAPI as a teaching sandbox for OpenAPI, REST, SDKs, MCP demos.
+      workflows: [JokeAPI Jokes, JokeAPI Metadata]
+    - id: integration-engineer
+      name: Integration Engineer
+      description: Wires JokeAPI into an internal platform and needs the metadata surface to drive the UI.
+      workflows: [JokeAPI Metadata]
+    - id: operator
+      name: Operator
+      description: Runs an instance of JokeAPI (or relies on the hosted one) and needs runtime info.
+      workflows: [JokeAPI System]
+    - id: monitoring
+      name: Monitoring
+      description: Probes /ping from uptime monitors and dashboards.
+      workflows: [JokeAPI System]
+
+  domains:
+    - name: Humor
+      description: Joke retrieval and contribution.
+    - name: Discovery
+      description: API-surface introspection (categories, flags, formats, languages).
+    - name: Health
+      description: Runtime info and reachability probes.
+
+  namespaces:
+    - consumes: jokeapi-jokes
+      restExposed: jokeapi-jokes-rest
+      mcpExposed: jokeapi-jokes-mcp
+      restPort: 8080
+      mcpPort: 9090
+    - consumes: jokeapi-metadata
+      restExposed: jokeapi-metadata-rest
+      mcpExposed: jokeapi-metadata-mcp
+      restPort: 8080
+      mcpPort: 9090
+    - consumes: jokeapi-system
+      restExposed: jokeapi-system-rest
+      mcpExposed: jokeapi-system-mcp
+      restPort: 8080
+      mcpPort: 9090
+
+  binds: []
+
+# ─────────────────────────────────────────────────────────────────────
+# CROSS-REFERENCE — resource → operations → workflows → personas
+# ─────────────────────────────────────────────────────────────────────
+crossReference:
+  - resource: joke
+    operations: [getJoke]
+    workflows: [JokeAPI Jokes]
+    personas: [Bot Author, Demo Developer]
+  - resource: submit
+    operations: [submitJoke]
+    workflows: [JokeAPI Jokes]
+    personas: [Demo Developer]
+  - resource: categories
+    operations: [getCategories]
+    workflows: [JokeAPI Metadata]
+    personas: [Demo Developer, Integration Engineer]
+  - resource: flags
+    operations: [getFlags]
+    workflows: [JokeAPI Metadata]
+    personas: [Demo Developer, Integration Engineer]
+  - resource: formats
+    operations: [getFormats]
+    workflows: [JokeAPI Metadata]
+    personas: [Demo Developer, Integration Engineer]
+  - resource: languages
+    operations: [getLanguages]
+    workflows: [JokeAPI Metadata]
+    personas: [Integration Engineer]
+  - resource: langcode
+    operations: [getLangcode]
+    workflows: [JokeAPI Metadata]
+    personas: [Integration Engineer]
+  - resource: info
+    operations: [getInfo]
+    workflows: [JokeAPI System]
+    personas: [Operator]
+  - resource: endpoints
+    operations: [getEndpoints]
+    workflows: [JokeAPI System]
+    personas: [Operator, Integration Engineer]
+  - resource: ping
+    operations: [ping]
+    workflows: [JokeAPI System]
+    personas: [Monitoring]

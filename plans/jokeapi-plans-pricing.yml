@@ -1,0 +1,85 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: JokeAPI
+providerId: jokeapi
+created: '2026-05-29'
+modified: '2026-05-29'
+reconciled: true
+tags:
+  - Jokes
+  - Humor
+  - Open Source
+  - Free
+description: >-
+  JokeAPI is a free, open source, donation-funded REST API. There is no paid
+  tier, no metered plan, and no commercial offering — every request is free
+  and unauthenticated, subject only to the published rate limits. Operating
+  costs are covered by GitHub Sponsors, Patreon, Ko-fi, and PayPal donations.
+  The single "plan" below reflects that reality so consumers and tooling have
+  a consistent surface to read.
+sources:
+  - https://jokeapi.dev/
+  - https://github.com/Sv443-Network/JokeAPI
+  - https://github.com/sponsors/Sv443
+plans:
+  - id: jokeapi-free
+    name: Free (Public)
+    type: freemium
+    description: >-
+      Free, no-signup, public REST API. Rate-limited at 120 requests per
+      minute per IP (5 per minute on /submit). MIT-licensed, donation-funded.
+    entries:
+      - label: API requests
+        name: api_requests
+        type: metered
+        metric: request
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: '1'
+        price: '0'
+        userMultiplied: false
+      - label: Joke submissions
+        name: joke_submissions
+        type: metered
+        metric: request
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: '1'
+        price: '0'
+        userMultiplied: false
+    elements:
+      - name: Seven joke categories (Any, Misc, Programming, Dark, Pun, Spooky, Christmas)
+      - name: Six blacklist flags (nsfw, religious, political, racist, sexist, explicit)
+      - name: Safe-mode switch
+      - name: Six joke languages (en, de, cs, es, fr, pt)
+      - name: JSON, XML, YAML, plain-text response formats
+      - name: CORS-enabled
+      - name: No authentication required
+      - name: Community joke submission via POST /submit
+  - id: jokeapi-self-hosted
+    name: Self-Hosted (Open Source)
+    type: subscription
+    description: >-
+      JokeAPI is open source under the MIT license. Anyone can clone the
+      repository, host their own instance, and bypass the public rate limits
+      entirely. There is no fee, no support contract — operating costs and
+      moderation are entirely on the operator.
+    entries:
+      - label: Self-host
+        name: self_host
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: '1'
+        price: '0'
+        userMultiplied: false
+    elements:
+      - name: MIT license — modify and redistribute freely
+      - name: Full source on git.sv443.net (mirrored on GitHub)
+      - name: Customizable joke catalogue
+      - name: No rate-limit enforcement unless you add one

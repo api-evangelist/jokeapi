@@ -1,0 +1,176 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  label: "JokeAPI — System"
+  description: >-
+    JokeAPI — System. 3 operations. Lead operation: JokeAPI Get Info.
+    Self-contained Naftiko capability covering one JokeAPI business surface —
+    runtime introspection (`/info`), endpoint discovery (`/endpoints`), and
+    uptime probing (`/ping`).
+  tags:
+    - JokeAPI
+    - System
+    - Health
+  created: "2026-05-29"
+  modified: "2026-05-29"
+
+binds: []
+
+capability:
+
+  # ── 1. Consumes — the upstream HTTP API this capability speaks to ─────
+  consumes:
+    - type: http
+      namespace: "jokeapi-system"
+      baseUri: "https://v2.jokeapi.dev"
+      description: "JokeAPI v2 — System business capability. Self-contained, no shared references. No authentication required."
+      resources:
+        - name: "info"
+          path: "/info"
+          operations:
+            - name: "getInfo"
+              method: GET
+              description: "Return runtime metadata about JokeAPI — version, joke count, categories, flags, types, formats, language ranges, safe-joke counts."
+              inputParameters:
+                - name: "format"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Response format: json, xml, yaml, or txt."
+                - name: "lang"
+                  in: query
+                  type: string
+                  required: false
+                  description: "ISO 639-1 system language code."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "endpoints"
+          path: "/endpoints"
+          operations:
+            - name: "getEndpoints"
+              method: GET
+              description: "List every documented endpoint exposed by JokeAPI with usage notes and supported formats."
+              inputParameters:
+                - name: "format"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Response format: json, xml, yaml, or txt."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "ping"
+          path: "/ping"
+          operations:
+            - name: "ping"
+              method: GET
+              description: "Lightweight uptime probe. Returns a short envelope confirming the API is reachable."
+              inputParameters:
+                - name: "format"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Response format: json, xml, yaml, or txt."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  # ── 2. REST exposer — required default ─────────────────────────────────
+  exposes:
+    - type: rest
+      namespace: "jokeapi-system-rest"
+      port: 8080
+      description: "REST adapter for JokeAPI — System. One Spectral-compliant resource per consumed operation, prefixed with /v1."
+      resources:
+        - path: "/v1/info"
+          name: "info"
+          description: "REST surface for runtime info."
+          operations:
+            - method: GET
+              name: "getInfo"
+              description: "Return runtime metadata about JokeAPI."
+              call: "jokeapi-system.getInfo"
+              with:
+                format: "rest.format"
+                lang: "rest.lang"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/endpoints"
+          name: "endpoints"
+          description: "REST surface for endpoint discovery."
+          operations:
+            - method: GET
+              name: "getEndpoints"
+              description: "List every documented endpoint exposed by JokeAPI."
+              call: "jokeapi-system.getEndpoints"
+              with:
+                format: "rest.format"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/ping"
+          name: "ping"
+          description: "REST surface for uptime probing."
+          operations:
+            - method: GET
+              name: "ping"
+              description: "Lightweight uptime probe."
+              call: "jokeapi-system.ping"
+              with:
+                format: "rest.format"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    # ── 3. MCP exposer — required default ────────────────────────────────
+    - type: mcp
+      namespace: "jokeapi-system-mcp"
+      port: 9090
+      transport: http
+      description: "MCP adapter for JokeAPI — System. One tool per consumed operation, routed inline through this capability's consumes block."
+      tools:
+        - name: "get-info"
+          description: "Return runtime metadata about JokeAPI — version, joke count, categories, flags, types, formats, language ranges."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "jokeapi-system.getInfo"
+          with:
+            format: "tools.format"
+            lang: "tools.lang"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "list-endpoints"
+          description: "List every documented endpoint exposed by JokeAPI with usage notes and supported formats."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "jokeapi-system.getEndpoints"
+          with:
+            format: "tools.format"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "ping"
+          description: "Lightweight uptime probe."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "jokeapi-system.ping"
+          with:
+            format: "tools.format"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-structure/jokeapi-formats-response-structure.json",
+  "name": "FormatsResponse",
+  "description": "Response-format metadata envelope.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "boolean",
+      "example": false
+    },
+    "formats": {
+      "type": "array",
+      "description": "Response formats accepted by `?format`.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "json",
+        "xml",
+        "yaml",
+        "txt"
+      ]
+    },
+    "timestamp": {
+      "type": "int32",
+      "example": 1780051223357
+    }
+  },
+  "required": [
+    "error",
+    "formats",
+    "timestamp"
+  ]
+}

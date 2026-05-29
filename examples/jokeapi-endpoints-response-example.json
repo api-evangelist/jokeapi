@@ -1,0 +1,14 @@
+{
+  "error": false,
+  "endpoints": [
+    {
+      "name": "Joke",
+      "usage": {
+        "method": {},
+        "url": {},
+        "supportedParams": {}
+      }
+    }
+  ],
+  "timestamp": 1780051223357
+}

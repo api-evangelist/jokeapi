@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-structure/jokeapi-langcode-response-structure.json",
+  "name": "LangcodeResponse",
+  "description": "Language-code resolution envelope.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "boolean",
+      "example": false
+    },
+    "code": {
+      "type": "string",
+      "description": "Resolved ISO 639-1 language code.",
+      "example": "de"
+    },
+    "timestamp": {
+      "type": "int32",
+      "example": 1780051223357
+    }
+  },
+  "required": [
+    "error",
+    "code",
+    "timestamp"
+  ]
+}

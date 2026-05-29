@@ -1,0 +1,10 @@
+{
+  "error": false,
+  "formats": [
+    "json",
+    "xml",
+    "yaml",
+    "txt"
+  ],
+  "timestamp": 1780051223357
+}

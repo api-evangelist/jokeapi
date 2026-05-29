@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-schema/jokeapi-languages-response-schema.json",
+  "title": "LanguagesResponse",
+  "description": "Language metadata envelope.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "boolean",
+      "example": false
+    },
+    "defaultLanguage": {
+      "type": "string",
+      "description": "ISO 639-1 default language.",
+      "example": "en"
+    },
+    "jokeLanguages": {
+      "type": "array",
+      "description": "Languages that have at least one joke.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "cs",
+        "de",
+        "en",
+        "es",
+        "fr",
+        "pt"
+      ]
+    },
+    "systemLanguages": {
+      "type": "array",
+      "description": "Languages JokeAPI uses for system messages and errors.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "cs",
+        "de",
+        "en",
+        "es",
+        "pt"
+      ]
+    },
+    "possibleLanguages": {
+      "type": "array",
+      "description": "Full set of ISO codes JokeAPI recognises.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "en"
+          },
+          "name": {
+            "type": "string",
+            "example": "English"
+          }
+        }
+      }
+    },
+    "timestamp": {
+      "type": "integer",
+      "example": 1780051223357
+    }
+  },
+  "required": [
+    "error",
+    "defaultLanguage",
+    "jokeLanguages",
+    "systemLanguages",
+    "timestamp"
+  ]
+}

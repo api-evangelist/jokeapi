@@ -1,0 +1,26 @@
+{
+  "error": false,
+  "defaultLanguage": "en",
+  "jokeLanguages": [
+    "cs",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "pt"
+  ],
+  "systemLanguages": [
+    "cs",
+    "de",
+    "en",
+    "es",
+    "pt"
+  ],
+  "possibleLanguages": [
+    {
+      "code": "en",
+      "name": "English"
+    }
+  ],
+  "timestamp": 1780051223357
+}

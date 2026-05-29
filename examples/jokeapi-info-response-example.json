@@ -1,0 +1,46 @@
+{
+  "error": false,
+  "version": "2.3.3",
+  "jokes": {
+    "totalCount": 1368,
+    "categories": [
+      "Any",
+      "Misc",
+      "Programming",
+      "Dark",
+      "Pun",
+      "Spooky",
+      "Christmas"
+    ],
+    "flags": [
+      "nsfw",
+      "religious",
+      "political",
+      "racist",
+      "sexist",
+      "explicit"
+    ],
+    "types": [
+      "single",
+      "twopart"
+    ],
+    "submissionURL": "https://v2.jokeapi.dev#submit",
+    "idRange": {},
+    "safeJokes": [
+      {
+        "lang": {},
+        "count": {}
+      }
+    ]
+  },
+  "formats": [
+    "json",
+    "xml",
+    "yaml",
+    "txt"
+  ],
+  "jokeLanguages": 6,
+  "systemLanguages": 5,
+  "info": "If you want to stay up to date on the status and future updates of JokeAPI...",
+  "timestamp": 1780051223357
+}

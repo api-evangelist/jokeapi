@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-schema/jokeapi-info-response-schema.json",
+  "title": "InfoResponse",
+  "description": "Runtime info envelope describing JokeAPI's current state.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "boolean",
+      "example": false
+    },
+    "version": {
+      "type": "string",
+      "description": "Running JokeAPI version.",
+      "example": "2.3.3"
+    },
+    "jokes": {
+      "type": "object",
+      "description": "Joke catalogue snapshot.",
+      "properties": {
+        "totalCount": {
+          "type": "integer",
+          "example": 1368
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "Any",
+            "Misc",
+            "Programming",
+            "Dark",
+            "Pun",
+            "Spooky",
+            "Christmas"
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "nsfw",
+            "religious",
+            "political",
+            "racist",
+            "sexist",
+            "explicit"
+          ]
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "single",
+            "twopart"
+          ]
+        },
+        "submissionURL": {
+          "type": "string",
+          "example": "https://v2.jokeapi.dev#submit"
+        },
+        "idRange": {
+          "type": "object",
+          "description": "Per-language ID range pair `[min, max]`.",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "safeJokes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "lang": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "formats": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "json",
+        "xml",
+        "yaml",
+        "txt"
+      ]
+    },
+    "jokeLanguages": {
+      "type": "integer",
+      "example": 6
+    },
+    "systemLanguages": {
+      "type": "integer",
+      "example": 5
+    },
+    "info": {
+      "type": "string",
+      "example": "If you want to stay up to date on the status and future updates of JokeAPI..."
+    },
+    "timestamp": {
+      "type": "integer",
+      "example": 1780051223357
+    }
+  },
+  "required": [
+    "error",
+    "version",
+    "jokes",
+    "formats",
+    "timestamp"
+  ]
+}

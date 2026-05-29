@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-schema/jokeapi-joke-flags-schema.json",
+  "title": "JokeFlags",
+  "description": "Content classification flags carried on every joke.",
+  "type": "object",
+  "properties": {
+    "nsfw": {
+      "type": "boolean",
+      "description": "Joke contains adult or explicit sexual content.",
+      "example": false
+    },
+    "religious": {
+      "type": "boolean",
+      "description": "Joke references or mocks religion.",
+      "example": false
+    },
+    "political": {
+      "type": "boolean",
+      "description": "Joke references politics or political figures.",
+      "example": false
+    },
+    "racist": {
+      "type": "boolean",
+      "description": "Joke contains racist content.",
+      "example": false
+    },
+    "sexist": {
+      "type": "boolean",
+      "description": "Joke contains sexist content.",
+      "example": false
+    },
+    "explicit": {
+      "type": "boolean",
+      "description": "Joke contains explicit language unrelated to NSFW.",
+      "example": false
+    }
+  },
+  "required": [
+    "nsfw",
+    "religious",
+    "political",
+    "racist",
+    "sexist",
+    "explicit"
+  ]
+}

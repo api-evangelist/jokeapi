@@ -1,0 +1,481 @@
+extends:
+  - spectral:oas
+
+# JokeAPI Spectral ruleset.
+#
+# Enforces the documentation conventions observed across the JokeAPI v2 surface:
+#   - operation summaries title-cased and prefixed with "JokeAPI"
+#   - kebab-case paths, no trailing slash
+#   - camelCase query parameters (JokeAPI uses `blacklistFlags`, `idRange`, `safe-mode`)
+#   - JSON-first responses with at least 200, 400, and 429 documented
+#   - response envelopes always carry `error`, `timestamp`, and either a payload
+#     field (`joke`, `categories`, `flags`, ...) or a `message` + `code` pair
+#
+# Severity guide:
+#   error — would break clients or tooling (missing operationId, no servers, GET with body)
+#   warn  — JokeAPI consistency rules (summary prefix, kebab-case, doc coverage)
+#   info  — opinionated best practices (examples, x-microcks-operation, external docs)
+
+rules:
+
+  # -------------------------------------------------------------------------
+  # INFO / METADATA
+  # -------------------------------------------------------------------------
+  info-title-jokeapi:
+    description: info.title MUST be "JokeAPI" (the canonical product name).
+    message: '{{property}}: title should equal "JokeAPI"'
+    severity: error
+    given: $.info
+    then:
+      field: title
+      function: pattern
+      functionOptions:
+        match: "^JokeAPI$"
+
+  info-description-required:
+    description: info.description MUST be present with at least 80 characters.
+    message: '{{property}}: description is missing or too short (<80 chars)'
+    severity: error
+    given: $.info
+    then:
+      field: description
+      function: length
+      functionOptions:
+        min: 80
+
+  info-version-required:
+    description: info.version MUST be present and follow semver.
+    message: '{{property}}: version is missing or not semver'
+    severity: error
+    given: $.info
+    then:
+      field: version
+      function: pattern
+      functionOptions:
+        match: "^\\d+\\.\\d+(\\.\\d+)?$"
+
+  info-license-mit:
+    description: License MUST be declared as MIT (JokeAPI is MIT-licensed).
+    message: '{{property}}: license.name should be "MIT"'
+    severity: warn
+    given: $.info.license
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        match: "^MIT$"
+
+  info-contact-required:
+    description: Contact information SHOULD be present.
+    message: '{{property}}: contact block is missing'
+    severity: info
+    given: $.info
+    then:
+      field: contact
+      function: truthy
+
+  # -------------------------------------------------------------------------
+  # OPENAPI VERSION
+  # -------------------------------------------------------------------------
+  openapi-version-3-0:
+    description: Use OpenAPI 3.0.x — Microcks and tooling compatibility.
+    message: '{{property}}: openapi version should match 3.0.x'
+    severity: warn
+    given: $.openapi
+    then:
+      function: pattern
+      functionOptions:
+        match: "^3\\.0\\."
+
+  # -------------------------------------------------------------------------
+  # SERVERS
+  # -------------------------------------------------------------------------
+  servers-required:
+    description: servers MUST be defined and non-empty.
+    message: '{{property}}: at least one server entry is required'
+    severity: error
+    given: $
+    then:
+      field: servers
+      function: truthy
+
+  server-url-https:
+    description: Every server URL MUST use HTTPS.
+    message: '{{value}} must use https://'
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  server-canonical-host:
+    description: At least one server URL SHOULD point at v2.jokeapi.dev.
+    message: '{{property}}: no canonical v2.jokeapi.dev server entry found'
+    severity: info
+    given: $
+    then:
+      field: servers
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: object
+            properties:
+              url:
+                type: string
+                pattern: "^https://v2\\.jokeapi\\.dev"
+            required: [url]
+
+  # -------------------------------------------------------------------------
+  # PATHS — NAMING
+  # -------------------------------------------------------------------------
+  path-kebab-case:
+    description: Path segments MUST be lowercase kebab-case.
+    message: '{{property}}: path segments must be lowercase kebab-case'
+    severity: warn
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9-]+|/\\{[a-zA-Z]+\\})+$"
+
+  path-no-trailing-slash:
+    description: Paths MUST NOT end with a trailing slash.
+    message: '{{property}}: path must not end with /'
+    severity: error
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ".+/$"
+
+  path-no-query-string:
+    description: Paths MUST NOT contain a query string.
+    message: '{{property}}: path must not contain ?'
+    severity: error
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "\\?"
+
+  # -------------------------------------------------------------------------
+  # OPERATIONS
+  # -------------------------------------------------------------------------
+  operation-id-required:
+    description: Every operation MUST have an operationId.
+    message: '{{property}}: operationId is missing'
+    severity: error
+    given: $.paths.*[get,post,put,patch,delete]
+    then:
+      field: operationId
+      function: truthy
+
+  operation-id-camel-case:
+    description: operationId MUST be camelCase.
+    message: '{{value}}: operationId must be camelCase'
+    severity: warn
+    given: $.paths.*[get,post,put,patch,delete].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  operation-summary-required:
+    description: Every operation MUST have a summary.
+    message: '{{property}}: summary is missing'
+    severity: error
+    given: $.paths.*[get,post,put,patch,delete]
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-jokeapi-prefix:
+    description: Operation summary MUST start with "JokeAPI ".
+    message: '{{value}}: summary must start with "JokeAPI "'
+    severity: warn
+    given: $.paths.*[get,post,put,patch,delete].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: "^JokeAPI "
+
+  operation-description-required:
+    description: Every operation MUST have a description of at least 30 characters.
+    message: '{{property}}: description is missing or too short'
+    severity: warn
+    given: $.paths.*[get,post,put,patch,delete]
+    then:
+      field: description
+      function: length
+      functionOptions:
+        min: 30
+
+  operation-tags-required:
+    description: Every operation MUST be tagged.
+    message: '{{property}}: tags array is missing or empty'
+    severity: error
+    given: $.paths.*[get,post,put,patch,delete]
+    then:
+      field: tags
+      function: truthy
+
+  operation-microcks-extension:
+    description: Every operation SHOULD declare an x-microcks-operation extension.
+    message: '{{property}}: x-microcks-operation is missing'
+    severity: info
+    given: $.paths.*[get,post,put,patch,delete]
+    then:
+      field: x-microcks-operation
+      function: truthy
+
+  # -------------------------------------------------------------------------
+  # TAGS
+  # -------------------------------------------------------------------------
+  tags-global-defined:
+    description: Global tags array MUST be defined.
+    message: '{{property}}: global tags array is missing'
+    severity: warn
+    given: $
+    then:
+      field: tags
+      function: truthy
+
+  tag-title-case:
+    description: Tag names MUST be Title Case (e.g. "Jokes", "Metadata", "System").
+    message: '{{value}}: tag name must be Title Case'
+    severity: warn
+    given: $.tags[*].name
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z]*( [A-Z][a-zA-Z]*)*$"
+
+  tag-description-required:
+    description: Every global tag MUST have a description.
+    message: '{{property}}: tag description is missing'
+    severity: warn
+    given: $.tags[*]
+    then:
+      field: description
+      function: truthy
+
+  # -------------------------------------------------------------------------
+  # PARAMETERS
+  # -------------------------------------------------------------------------
+  parameter-description-required:
+    description: Every parameter MUST have a description.
+    message: '{{property}}: parameter description is missing'
+    severity: warn
+    given: $.paths.*.*.parameters[*]
+    then:
+      field: description
+      function: truthy
+
+  parameter-schema-required:
+    description: Every parameter MUST have a schema with type.
+    message: '{{property}}: parameter schema/type is missing'
+    severity: error
+    given: $.paths.*.*.parameters[*]
+    then:
+      field: schema
+      function: truthy
+
+  parameter-camel-or-kebab-case:
+    description: Parameter names follow JokeAPI's actual convention — camelCase (`blacklistFlags`, `idRange`) or kebab-case (`safe-mode`).
+    message: '{{value}}: parameter name must be camelCase or kebab-case'
+    severity: warn
+    given: $.paths.*.*.parameters[*].name
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9-]*$"
+
+  parameter-format-enum:
+    description: '`format` parameter SHOULD declare its enum [json, xml, yaml, txt].'
+    message: '{{property}}: format parameter should enumerate json/xml/yaml/txt'
+    severity: info
+    given: $.paths.*.*.parameters[?(@.name=='format')]
+    then:
+      field: schema.enum
+      function: truthy
+
+  # -------------------------------------------------------------------------
+  # REQUEST BODIES
+  # -------------------------------------------------------------------------
+  request-body-json-content:
+    description: Request bodies MUST advertise application/json content.
+    message: '{{property}}: request body must include application/json'
+    severity: warn
+    given: $.paths.*.*.requestBody.content
+    then:
+      field: application/json
+      function: truthy
+
+  request-body-description:
+    description: Request bodies SHOULD have a description.
+    message: '{{property}}: requestBody description is missing'
+    severity: info
+    given: $.paths.*.*.requestBody
+    then:
+      field: description
+      function: truthy
+
+  # -------------------------------------------------------------------------
+  # RESPONSES
+  # -------------------------------------------------------------------------
+  response-2xx-required:
+    description: Every operation MUST document at least one 2xx response.
+    message: '{{property}}: no 2xx response defined'
+    severity: error
+    given: $.paths.*[get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          patternProperties:
+            "^2\\d\\d$":
+              type: object
+          minProperties: 1
+
+  response-429-documented:
+    description: Operations SHOULD document a 429 response (JokeAPI rate-limits at 120 req/min).
+    message: '{{property}}: 429 response is missing — JokeAPI is rate-limited'
+    severity: info
+    given: $.paths.*[get,post,put,patch,delete].responses
+    then:
+      field: "429"
+      function: truthy
+
+  response-description-required:
+    description: Every response MUST have a description.
+    message: '{{property}}: response description is missing'
+    severity: error
+    given: $.paths.*.*.responses.*
+    then:
+      field: description
+      function: truthy
+
+  response-json-content:
+    description: Responses SHOULD include application/json content.
+    message: '{{property}}: response missing application/json content'
+    severity: info
+    given: $.paths.*.*.responses.*.content
+    then:
+      field: application/json
+      function: truthy
+
+  # -------------------------------------------------------------------------
+  # SCHEMAS
+  # -------------------------------------------------------------------------
+  schema-description-required:
+    description: Top-level component schemas MUST have a description.
+    message: '{{property}}: schema description is missing'
+    severity: warn
+    given: $.components.schemas.*
+    then:
+      field: description
+      function: truthy
+
+  schema-type-required:
+    description: Top-level component schemas MUST declare a type.
+    message: '{{property}}: schema type is missing'
+    severity: error
+    given: $.components.schemas.*
+    then:
+      field: type
+      function: truthy
+
+  schema-property-camel-case:
+    description: Schema property names use the same casing as the live API (camelCase or single-word lowercase).
+    message: '{{value}}: schema property must be camelCase or single-word lowercase'
+    severity: info
+    given: $.components.schemas.*.properties.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  schema-error-envelope:
+    description: JokeAPI error responses follow the `{error, code, message, causedBy, timestamp}` envelope.
+    message: '{{property}}: JokeError schema must include all canonical envelope fields'
+    severity: warn
+    given: $.components.schemas.JokeError
+    then:
+      field: required
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: string
+            enum: [error, code, message, causedBy, timestamp]
+
+  schema-timestamp-integer:
+    description: '`timestamp` properties MUST be `integer` (Unix epoch milliseconds).'
+    message: '{{property}}: timestamp must be type integer'
+    severity: warn
+    given: $..properties.timestamp
+    then:
+      field: type
+      function: pattern
+      functionOptions:
+        match: "^integer$"
+
+  # -------------------------------------------------------------------------
+  # SECURITY
+  # -------------------------------------------------------------------------
+  no-security-schemes:
+    description: JokeAPI requires NO authentication — security schemes MUST NOT be declared.
+    message: '{{property}}: JokeAPI is open; do not declare securitySchemes'
+    severity: warn
+    given: $.components
+    then:
+      field: securitySchemes
+      function: falsy
+
+  # -------------------------------------------------------------------------
+  # HTTP METHOD CONVENTIONS
+  # -------------------------------------------------------------------------
+  get-no-request-body:
+    description: GET operations MUST NOT have a request body.
+    message: '{{property}}: GET operation must not declare a requestBody'
+    severity: error
+    given: $.paths.*.get
+    then:
+      field: requestBody
+      function: falsy
+
+  post-has-request-body:
+    description: POST operations SHOULD declare a request body.
+    message: '{{property}}: POST operation should declare a requestBody'
+    severity: warn
+    given: $.paths.*.post
+    then:
+      field: requestBody
+      function: truthy
+
+  # -------------------------------------------------------------------------
+  # GENERAL QUALITY
+  # -------------------------------------------------------------------------
+  no-empty-descriptions:
+    description: Descriptions MUST NOT be empty whitespace.
+    message: '{{property}}: description is empty'
+    severity: warn
+    given: $..description
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^\\s*$"
+
+  examples-on-schemas:
+    description: Schema properties SHOULD carry examples to power Microcks mocks.
+    message: '{{property}}: property has no example value'
+    severity: info
+    given: $.components.schemas.*.properties.*
+    then:
+      field: example
+      function: truthy

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-structure/jokeapi-submission-response-structure.json",
+  "name": "SubmissionResponse",
+  "description": "Submission response envelope.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "boolean",
+      "example": false
+    },
+    "message": {
+      "type": "string",
+      "example": "Joke submission was successful."
+    },
+    "submission": {
+      "type": "object",
+      "description": "Submission payload for `POST /submit`.",
+      "properties": {
+        "formatVersion": {
+          "type": "int32",
+          "description": "Submission format version. Currently `3`.",
+          "example": 3
+        },
+        "category": {
+          "type": "string",
+          "description": "Target category for the joke.",
+          "enum": [
+            "Misc",
+            "Programming",
+            "Dark",
+            "Pun",
+            "Spooky",
+            "Christmas"
+          ],
+          "example": "Programming"
+        },
+        "type": {
+          "type": "string",
+          "description": "Joke shape.",
+          "enum": [
+            "single",
+            "twopart"
+          ],
+          "example": "twopart"
+        },
+        "joke": {
+          "type": "string",
+          "description": "Joke text (required when `type` is `single`).",
+          "example": "Why do programmers prefer dark mode? Because light attracts bugs."
+        },
+        "setup": {
+          "type": "string",
+          "description": "Setup line (required when `type` is `twopart`).",
+          "example": "Why don't programmers like nature?"
+        },
+        "delivery": {
+          "type": "string",
+          "description": "Punchline (required when `type` is `twopart`).",
+          "example": "It has too many bugs."
+        },
+        "flags": {
+          "type": "object",
+          "description": "Content classification flags carried on every joke.",
+          "properties": {
+            "nsfw": {
+              "type": "boolean",
+              "description": "Joke contains adult or explicit sexual content.",
+              "example": false
+            },
+            "religious": {
+              "type": "boolean",
+              "description": "Joke references or mocks religion.",
+              "example": false
+            },
+            "political": {
+              "type": "boolean",
+              "description": "Joke references politics or political figures.",
+              "example": false
+            },
+            "racist": {
+              "type": "boolean",
+              "description": "Joke contains racist content.",
+              "example": false
+            },
+            "sexist": {
+              "type": "boolean",
+              "description": "Joke contains sexist content.",
+              "example": false
+            },
+            "explicit": {
+              "type": "boolean",
+              "description": "Joke contains explicit language unrelated to NSFW.",
+              "example": false
+            }
+          },
+          "required": [
+            "nsfw",
+            "religious",
+            "political",
+            "racist",
+            "sexist",
+            "explicit"
+          ]
+        },
+        "lang": {
+          "type": "string",
+          "description": "ISO 639-1 language code of the joke.",
+          "example": "en"
+        }
+      },
+      "required": [
+        "formatVersion",
+        "category",
+        "type",
+        "flags",
+        "lang"
+      ]
+    },
+    "timestamp": {
+      "type": "int32",
+      "example": 1780051223357
+    }
+  },
+  "required": [
+    "error",
+    "message",
+    "timestamp"
+  ]
+}
