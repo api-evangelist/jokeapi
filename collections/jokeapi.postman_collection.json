@@ -1,0 +1,1425 @@
+{
+  "item": [
+    {
+      "id": "867a21c9-549b-44e7-ab90-261bce40f6d4",
+      "name": "Jokes",
+      "description": {
+        "content": "Operations for retrieving and submitting jokes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a5e08e1c-81a2-4362-8af1-5a1c898e5d9f",
+          "name": "JokeAPI Get Joke by Category",
+          "request": {
+            "name": "JokeAPI Get Joke by Category",
+            "description": {
+              "content": "Retrieve one or more jokes from a single category, a comma-separated list of categories, or the special value `Any`. Supports filtering by blacklist flags, joke type, language, ID range, contains-text search, amount, and safe-mode.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "joke",
+                ":category"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "en",
+                  "description": "ISO 639-1 language code for the joke language. Supported jokes languages include `en`, `de`, `cs`, `es`, `fr`, `pt`. Defaults to `en`."
+                },
+                {
+                  "disabled": false,
+                  "key": "blacklistFlags",
+                  "value": "<string>",
+                  "description": "Comma-separated list of flags to exclude (`nsfw`, `religious`, `political`, `racist`, `sexist`, `explicit`). Any joke carrying at least one listed flag is filtered out."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Restrict results to a single joke type."
+                },
+                {
+                  "disabled": false,
+                  "key": "contains",
+                  "value": "<string>",
+                  "description": "URL-encoded substring that must appear in the joke text (or the setup/delivery of a twopart joke)."
+                },
+                {
+                  "disabled": false,
+                  "key": "idRange",
+                  "value": "<string>",
+                  "description": "Inclusive ID range (e.g. `0-50`) or a single ID (e.g. `42`) to constrain results."
+                },
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "1",
+                  "description": "Number of jokes to retrieve (1-10). Defaults to 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "safe-mode",
+                  "value": "<string>",
+                  "description": "When present (no value required), exclude any joke that carries any flag and any joke categorised as Dark."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "category",
+                  "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c50e3d8d-5a05-47a6-b6bd-d8d650e80746",
+              "name": "A single joke, an envelope of multiple jokes, or an error envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"id\": 127,\n  \"safe\": true,\n  \"lang\": \"en\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fb2ffb2-633f-4f9b-9cba-9eee6e80cb31",
+              "name": "Malformed request (e.g. unknown category or invalid parameter).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 106,\n  \"message\": \"No matching joke found\",\n  \"causedBy\": [\n    \"No jokes were found that match your provided filter(s).\"\n  ],\n  \"additionalInfo\": \"Try removing the safe-mode or blacklistFlags filters.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ad825b8-85c3-411b-aed1-53c2e41f9e98",
+              "name": "No joke matches the given filters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 106,\n  \"message\": \"No matching joke found\",\n  \"causedBy\": [\n    \"No jokes were found that match your provided filter(s).\"\n  ],\n  \"additionalInfo\": \"Try removing the safe-mode or blacklistFlags filters.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7955c68f-4b4f-406a-826e-2c4890f4dcaa",
+              "name": "Rate-limit exceeded (120 requests per minute per IP).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 101,\n  \"message\": \"Rate limit exceeded\",\n  \"causedBy\": [\n    \"You exceeded 120 requests per minute.\"\n  ],\n  \"additionalInfo\": \"Wait until the Retry-After window expires.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8414839-ebe9-4d2d-8dad-ac8dae95db8c",
+          "name": "JokeAPI Submit Joke",
+          "request": {
+            "name": "JokeAPI Submit Joke",
+            "description": {
+              "content": "Submit a joke for moderator review. Submissions are rate-limited separately at 5 per minute per IP. Pass `?dry-run` to validate the payload structure without persisting the submission.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "submit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "dry-run",
+                  "value": "<string>",
+                  "description": "When present, the submission is validated for shape but not persisted. No value is required."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"formatVersion\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"type\": \"<string>\",\n  \"flags\": {\n    \"nsfw\": \"<boolean>\",\n    \"religious\": \"<boolean>\",\n    \"political\": \"<boolean>\",\n    \"racist\": \"<boolean>\",\n    \"sexist\": \"<boolean>\",\n    \"explicit\": \"<boolean>\"\n  },\n  \"lang\": \"<string>\",\n  \"joke\": \"<string>\",\n  \"setup\": \"<string>\",\n  \"delivery\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3bc7229-6594-4eba-a134-cdb2b25f1092",
+              "name": "Submission accepted (or validated successfully in dry-run mode).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "dry-run",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"formatVersion\": 3,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"lang\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"message\": \"Joke submission was successful.\",\n  \"submission\": {\n    \"formatVersion\": 3,\n    \"category\": \"Programming\",\n    \"type\": \"twopart\",\n    \"setup\": \"Why don't programmers like nature?\",\n    \"delivery\": \"It has too many bugs.\",\n    \"flags\": {\n      \"nsfw\": false,\n      \"religious\": false,\n      \"political\": false,\n      \"racist\": false,\n      \"sexist\": false,\n      \"explicit\": false\n    },\n    \"lang\": \"en\"\n  },\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d6e5a3b-e335-4e9d-83fb-43eac8d42183",
+              "name": "Submission failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "dry-run",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"formatVersion\": 3,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"lang\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 105,\n  \"message\": \"Submission malformed\",\n  \"causedBy\": [\n    \"The provided payload does not match the expected JokeSubmission schema.\"\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b008740-1a89-4794-99f4-cf3276dbbbfa",
+              "name": "Submission rate-limit exceeded (5 per minute per IP).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "dry-run",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"formatVersion\": 3,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"lang\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 101,\n  \"message\": \"Submission rate limit exceeded\",\n  \"causedBy\": [\n    \"You exceeded 5 submissions per minute.\"\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "dba19e43-8431-4a1b-9086-15e31aa8eaa3",
+      "name": "Metadata",
+      "description": {
+        "content": "Operations describing the API surface — categories, flags, formats, languages.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b626b8da-b038-45b3-9b0c-84dcccdaf61c",
+          "name": "JokeAPI List Categories",
+          "request": {
+            "name": "JokeAPI List Categories",
+            "description": {
+              "content": "List every joke category JokeAPI exposes, plus the recognised category aliases. Use one of the returned categories as the path parameter to `/joke/{category}`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "en",
+                  "description": "ISO 639-1 system language for the response messages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cea950ad-7983-470d-ac55-b9d841396f51",
+              "name": "Categories envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"categories\": [\n    \"Any\",\n    \"Misc\",\n    \"Programming\",\n    \"Dark\",\n    \"Pun\",\n    \"Spooky\",\n    \"Christmas\"\n  ],\n  \"categoryAliases\": [\n    {\n      \"alias\": \"Coding\",\n      \"resolved\": \"Programming\"\n    },\n    {\n      \"alias\": \"Development\",\n      \"resolved\": \"Programming\"\n    },\n    {\n      \"alias\": \"Halloween\",\n      \"resolved\": \"Spooky\"\n    }\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d1808df-64bf-42d0-8a54-1e750a5e8c0d",
+          "name": "JokeAPI List Blacklist Flags",
+          "request": {
+            "name": "JokeAPI List Blacklist Flags",
+            "description": {
+              "content": "List the blacklist flags consumers can pass to `?blacklistFlags`. Each flag indicates a category of potentially offensive content.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09485b9e-aee5-4e27-a415-8fdbfda0b343",
+              "name": "Flags envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"flags\": [\n    \"nsfw\",\n    \"religious\",\n    \"political\",\n    \"racist\",\n    \"sexist\",\n    \"explicit\"\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34378066-ed87-4fa8-ba62-4e15c3af8f21",
+          "name": "JokeAPI List Response Formats",
+          "request": {
+            "name": "JokeAPI List Response Formats",
+            "description": {
+              "content": "List the response formats JokeAPI can return. Values map to the `?format` query parameter on every other endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "formats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "07e0afb4-100e-4956-a41a-a4d1aed4af06",
+              "name": "Formats envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "formats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"formats\": [\n    \"json\",\n    \"xml\",\n    \"yaml\",\n    \"txt\"\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22ce3b69-1363-439f-afc3-9a1b3565648b",
+          "name": "JokeAPI List Supported Languages",
+          "request": {
+            "name": "JokeAPI List Supported Languages",
+            "description": {
+              "content": "List the joke languages and the system languages JokeAPI supports. Joke languages have at least one joke available; system languages affect error-message localisation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "languages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "en",
+                  "description": "ISO 639-1 system language for the response messages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "613396d2-67b4-4507-9555-31aaab4654bf",
+              "name": "Languages envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "languages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"defaultLanguage\": \"en\",\n  \"jokeLanguages\": [\n    \"cs\",\n    \"de\",\n    \"en\",\n    \"es\",\n    \"fr\",\n    \"pt\"\n  ],\n  \"systemLanguages\": [\n    \"cs\",\n    \"de\",\n    \"en\",\n    \"es\",\n    \"pt\"\n  ],\n  \"possibleLanguages\": [\n    {\n      \"code\": \"en\",\n      \"name\": \"English\"\n    },\n    {\n      \"code\": \"de\",\n      \"name\": \"German\"\n    },\n    {\n      \"code\": \"fr\",\n      \"name\": \"French\"\n    }\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "966987ca-822d-4ed5-a999-24218644e343",
+          "name": "JokeAPI Resolve Language Code",
+          "request": {
+            "name": "JokeAPI Resolve Language Code",
+            "description": {
+              "content": "Resolve a human-readable language name (e.g. `german`) to its ISO 639-1 language code (e.g. `de`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "langcode",
+                ":language"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "language",
+                  "description": "(Required) Human-readable language name in English."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ed8b2cb-8734-4506-9caf-65d4b8448746",
+              "name": "Language code envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "langcode",
+                    ":language"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "language",
+                      "description": "(Required) Human-readable language name in English."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"code\": \"de\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1cf83ef-4287-4220-afa9-054d442582bb",
+              "name": "Unknown language name.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "langcode",
+                    ":language"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "language",
+                      "description": "(Required) Human-readable language name in English."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 104,\n  \"message\": \"Language not supported\",\n  \"causedBy\": [\n    \"No mapping found for that language name.\"\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "d5dcb5f3-35d6-42d6-92d9-99c1bd6bd026",
+      "name": "System",
+      "description": {
+        "content": "Health and discovery endpoints.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5b1d423b-4791-4447-914a-b21b901eb0fa",
+          "name": "JokeAPI Get Info",
+          "request": {
+            "name": "JokeAPI Get Info",
+            "description": {
+              "content": "Return runtime metadata about JokeAPI — version, total joke count, the full list of categories, flags, types, supported formats, language counts, per-language ID ranges, and per-language safe-joke counts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "en",
+                  "description": "ISO 639-1 system language for the response messages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f2b555a-697a-413f-8159-634fbd84f73c",
+              "name": "Runtime info envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"version\": \"2.3.3\",\n  \"jokes\": {\n    \"totalCount\": 1368,\n    \"categories\": [\n      \"Any\",\n      \"Misc\",\n      \"Programming\",\n      \"Dark\",\n      \"Pun\",\n      \"Spooky\",\n      \"Christmas\"\n    ],\n    \"flags\": [\n      \"nsfw\",\n      \"religious\",\n      \"political\",\n      \"racist\",\n      \"sexist\",\n      \"explicit\"\n    ],\n    \"types\": [\n      \"single\",\n      \"twopart\"\n    ],\n    \"submissionURL\": \"https://v2.jokeapi.dev#submit\",\n    \"idRange\": {\n      \"en\": [\n        0,\n        318\n      ],\n      \"de\": [\n        0,\n        35\n      ]\n    },\n    \"safeJokes\": [\n      {\n        \"lang\": \"en\",\n        \"count\": 183\n      },\n      {\n        \"lang\": \"de\",\n        \"count\": 29\n      }\n    ]\n  },\n  \"formats\": [\n    \"json\",\n    \"xml\",\n    \"yaml\",\n    \"txt\"\n  ],\n  \"jokeLanguages\": 6,\n  \"systemLanguages\": 5,\n  \"info\": \"If you want to stay up to date on the status and future updates of JokeAPI, consider joining the Discord server.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c8a87e8-77a5-4e01-9939-727a5c080f49",
+          "name": "JokeAPI List Endpoints",
+          "request": {
+            "name": "JokeAPI List Endpoints",
+            "description": {
+              "content": "List every documented endpoint exposed by JokeAPI, including its URL, usage notes, and supported response formats.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "endpoints"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e92db50-f873-4739-844d-0eac10f3f162",
+              "name": "Endpoints envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "endpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"endpoints\": [\n    {\n      \"name\": \"Joke\",\n      \"usage\": {\n        \"method\": \"GET\",\n        \"url\": \"https://v2.jokeapi.dev/joke/{category}\",\n        \"supportedParams\": [\n          \"format\",\n          \"blacklistFlags\",\n          \"type\",\n          \"contains\",\n          \"idRange\",\n          \"amount\",\n          \"lang\",\n          \"safe-mode\"\n        ]\n      }\n    }\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "590ff34a-b5a8-4eba-b6a7-a79a3441d76a",
+          "name": "JokeAPI Ping",
+          "request": {
+            "name": "JokeAPI Ping",
+            "description": {
+              "content": "Lightweight uptime endpoint. Returns a short payload confirming the API is reachable and reporting the server timestamp.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12686fcf-c23c-4833-8223-53c90e738069",
+              "name": "Ping envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"ping\": \"Pong!\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://v2.jokeapi.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d9292cee-bd63-45a5-92d4-2575b00965d8",
+    "name": "JokeAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JokeAPI is a free and open REST API that delivers consistently formatted jokes in JSON, XML, YAML, or plain text. Powerful filters let consumers narrow jokes by category, language, content flags, type, ID range, or full-text contains search, with optional safe-mode to exclude any joke that carries a blacklist flag. The API requires no sign-up, supports CORS, and is rate-limited per IP. Open source under the MIT license, maintained by Sv443.\n\nContact Support:\n Name: Sv443",
+      "type": "text/plain"
+    }
+  }
+}

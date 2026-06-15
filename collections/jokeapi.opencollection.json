@@ -1,0 +1,306 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "JokeAPI",
+    "version": "2.3.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jokes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "JokeAPI Get Joke by Category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/joke/:category",
+            "params": [
+              {
+                "name": "category",
+                "value": "Programming",
+                "type": "path",
+                "description": "Category or comma-separated list of categories. Use `Any` to draw from all categories."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "ISO 639-1 language code for the joke language. Supported jokes languages include `en`, `de`, `cs`, `es`, `fr`, `pt`. Defaults to `en`."
+              },
+              {
+                "name": "blacklistFlags",
+                "value": "nsfw,racist,sexist",
+                "type": "query",
+                "description": "Comma-separated list of flags to exclude (`nsfw`, `religious`, `political`, `racist`, `sexist`, `explicit`). Any joke carrying at least one listed flag is filtered out."
+              },
+              {
+                "name": "type",
+                "value": "twopart",
+                "type": "query",
+                "description": "Restrict results to a single joke type."
+              },
+              {
+                "name": "contains",
+                "value": "developer",
+                "type": "query",
+                "description": "URL-encoded substring that must appear in the joke text (or the setup/delivery of a twopart joke)."
+              },
+              {
+                "name": "idRange",
+                "value": "0-50",
+                "type": "query",
+                "description": "Inclusive ID range (e.g. `0-50`) or a single ID (e.g. `42`) to constrain results."
+              },
+              {
+                "name": "amount",
+                "value": "1",
+                "type": "query",
+                "description": "Number of jokes to retrieve (1-10). Defaults to 1."
+              },
+              {
+                "name": "safe-mode",
+                "value": "",
+                "type": "query",
+                "description": "When present (no value required), exclude any joke that carries any flag and any joke categorised as Dark."
+              }
+            ]
+          },
+          "docs": "Retrieve one or more jokes from a single category, a comma-separated list of categories, or the special value `Any`. Supports filtering by blacklist flags, joke type, language, ID range, contains-text search, amount, and safe-mode."
+        },
+        {
+          "info": {
+            "name": "JokeAPI Submit Joke",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://v2.jokeapi.dev/submit",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "dry-run",
+                "value": "",
+                "type": "query",
+                "description": "When present, the submission is validated for shape but not persisted. No value is required."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a joke for moderator review. Submissions are rate-limited separately at 5 per minute per IP. Pass `?dry-run` to validate the payload structure without persisting the submission."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "JokeAPI List Categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/categories",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "ISO 639-1 system language for the response messages."
+              }
+            ]
+          },
+          "docs": "List every joke category JokeAPI exposes, plus the recognised category aliases. Use one of the returned categories as the path parameter to `/joke/{category}`."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Blacklist Flags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/flags",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "List the blacklist flags consumers can pass to `?blacklistFlags`. Each flag indicates a category of potentially offensive content."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Response Formats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/formats",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "List the response formats JokeAPI can return. Values map to the `?format` query parameter on every other endpoint."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Supported Languages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/languages",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "ISO 639-1 system language for the response messages."
+              }
+            ]
+          },
+          "docs": "List the joke languages and the system languages JokeAPI supports. Joke languages have at least one joke available; system languages affect error-message localisation."
+        },
+        {
+          "info": {
+            "name": "JokeAPI Resolve Language Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/langcode/:language",
+            "params": [
+              {
+                "name": "language",
+                "value": "german",
+                "type": "path",
+                "description": "Human-readable language name in English."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "Resolve a human-readable language name (e.g. `german`) to its ISO 639-1 language code (e.g. `de`)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "JokeAPI Get Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/info",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "ISO 639-1 system language for the response messages."
+              }
+            ]
+          },
+          "docs": "Return runtime metadata about JokeAPI — version, total joke count, the full list of categories, flags, types, supported formats, language counts, per-language ID ranges, and per-language safe-joke counts."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/endpoints",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "List every documented endpoint exposed by JokeAPI, including its URL, usage notes, and supported response formats."
+        },
+        {
+          "info": {
+            "name": "JokeAPI Ping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/ping",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "Lightweight uptime endpoint. Returns a short payload confirming the API is reachable and reporting the server timestamp."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
