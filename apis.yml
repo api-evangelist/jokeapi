@@ -57,43 +57,43 @@ apis:
         url: https://github.com/Sv443-Network/JokeAPI/blob/main/changelog.md
       - type: StatusPage
         url: https://status.sv443.net/
-      - type: SDK
+      - type: SDKs
         url: https://github.com/sahithyandev/sv443-joke-api-js-wrapper
         title: Node.js Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/thenamesweretakenalready/Sv443s-JokeAPI-Python-Wrapper
         title: Python Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/bitstep-ie/jokeapi
         title: TypeScript Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/DanBuxton/JokeAPI-CS-Wrapper
         title: C# Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/MichaelDark/jokeapi
         title: Dart Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/Icelain/jokeapi
         title: Go Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/the-codeboy/Jokes4J
         title: Java Wrapper — Jokes4J (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/EasyG0ing1/JavaJokesAPI
         title: Java Wrapper — JavaJokesAPI (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/khurozov/jokeapi-java
         title: Java Wrapper — jokeapi-java (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/ethauvin/jokeapi
         title: Kotlin / Java / Android Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/IllusionMan1212/jokeapi-odin
         title: Odin Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/JustPush-io/php-jokeapi
         title: PHP Wrapper (community)
-      - type: SDK
+      - type: SDKs
         url: https://github.com/canarado/joketeller
         title: Rust Wrapper — joketeller (community)
 common:
