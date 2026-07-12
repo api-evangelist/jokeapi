@@ -97,6 +97,8 @@ apis:
         url: https://github.com/canarado/joketeller
         title: Rust Wrapper — joketeller (community)
 common:
+  - type: DomainSecurity
+    url: security/jokeapi-domain-security.yml
   - type: Website
     url: https://jokeapi.dev/
   - type: Documentation
