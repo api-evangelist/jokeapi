@@ -1,0 +1,360 @@
+openapi: 3.0.3
+info:
+  title: Joke Jokes System API
+  description: JokeAPI is a free and open REST API that delivers consistently formatted jokes in JSON, XML, YAML, or plain text. Powerful filters let consumers narrow jokes by category, language, content flags, type, ID range, or full-text contains search, with optional safe-mode to exclude any joke that carries a blacklist flag. The API requires no sign-up, supports CORS, and is rate-limited per IP. Open source under the MIT license, maintained by Sv443.
+  version: 2.3.3
+  contact:
+    name: Sv443
+    url: https://sv443.net/
+  license:
+    name: MIT
+    url: https://github.com/Sv443-Network/JokeAPI/blob/main/LICENSE.txt
+  x-generated-from: documentation
+  x-last-validated: '2026-05-29'
+servers:
+- url: https://v2.jokeapi.dev
+  description: Primary public endpoint
+- url: https://sv443.net/jokeapi/v2
+  description: Legacy alias for the primary endpoint
+tags:
+- name: System
+  description: Health and discovery endpoints.
+paths:
+  /info:
+    get:
+      operationId: getInfo
+      summary: JokeAPI Get Info
+      description: Return runtime metadata about JokeAPI — version, total joke count, the full list of categories, flags, types, supported formats, language counts, per-language ID ranges, and per-language safe-joke counts.
+      tags:
+      - System
+      parameters:
+      - name: format
+        in: query
+        required: false
+        description: Response format. Defaults to `json`.
+        schema:
+          type: string
+          enum:
+          - json
+          - xml
+          - yaml
+          - txt
+          default: json
+        example: json
+      - name: lang
+        in: query
+        required: false
+        description: ISO 639-1 system language for the response messages.
+        schema:
+          type: string
+          default: en
+        example: en
+      responses:
+        '200':
+          description: Runtime info envelope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoResponse'
+              examples:
+                GetInfo200Example:
+                  summary: Default getInfo 200 response
+                  x-microcks-default: true
+                  value:
+                    error: false
+                    version: 2.3.3
+                    jokes:
+                      totalCount: 1368
+                      categories:
+                      - Any
+                      - Misc
+                      - Programming
+                      - Dark
+                      - Pun
+                      - Spooky
+                      - Christmas
+                      flags:
+                      - nsfw
+                      - religious
+                      - political
+                      - racist
+                      - sexist
+                      - explicit
+                      types:
+                      - single
+                      - twopart
+                      submissionURL: https://v2.jokeapi.dev#submit
+                      idRange:
+                        en:
+                        - 0
+                        - 318
+                        de:
+                        - 0
+                        - 35
+                      safeJokes:
+                      - lang: en
+                        count: 183
+                      - lang: de
+                        count: 29
+                    formats:
+                    - json
+                    - xml
+                    - yaml
+                    - txt
+                    jokeLanguages: 6
+                    systemLanguages: 5
+                    info: If you want to stay up to date on the status and future updates of JokeAPI, consider joining the Discord server.
+                    timestamp: 1780051223357
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /endpoints:
+    get:
+      operationId: getEndpoints
+      summary: JokeAPI List Endpoints
+      description: List every documented endpoint exposed by JokeAPI, including its URL, usage notes, and supported response formats.
+      tags:
+      - System
+      parameters:
+      - name: format
+        in: query
+        required: false
+        description: Response format. Defaults to `json`.
+        schema:
+          type: string
+          enum:
+          - json
+          - xml
+          - yaml
+          - txt
+          default: json
+        example: json
+      responses:
+        '200':
+          description: Endpoints envelope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointsResponse'
+              examples:
+                GetEndpoints200Example:
+                  summary: Default getEndpoints 200 response
+                  x-microcks-default: true
+                  value:
+                    error: false
+                    endpoints:
+                    - name: Joke
+                      usage:
+                        method: GET
+                        url: https://v2.jokeapi.dev/joke/{category}
+                        supportedParams:
+                        - format
+                        - blacklistFlags
+                        - type
+                        - contains
+                        - idRange
+                        - amount
+                        - lang
+                        - safe-mode
+                    timestamp: 1780051223357
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ping:
+    get:
+      operationId: ping
+      summary: JokeAPI Ping
+      description: Lightweight uptime endpoint. Returns a short payload confirming the API is reachable and reporting the server timestamp.
+      tags:
+      - System
+      parameters:
+      - name: format
+        in: query
+        required: false
+        description: Response format. Defaults to `json`.
+        schema:
+          type: string
+          enum:
+          - json
+          - xml
+          - yaml
+          - txt
+          default: json
+        example: json
+      responses:
+        '200':
+          description: Ping envelope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingResponse'
+              examples:
+                Ping200Example:
+                  summary: Default ping 200 response
+                  x-microcks-default: true
+                  value:
+                    error: false
+                    ping: Pong!
+                    timestamp: 1780051223357
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    EndpointsResponse:
+      type: object
+      description: Endpoint catalogue envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        endpoints:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Joke
+              usage:
+                type: object
+                properties:
+                  method:
+                    type: string
+                    example: GET
+                  url:
+                    type: string
+                    example: https://v2.jokeapi.dev/joke/{category}
+                  supportedParams:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - format
+                    - blacklistFlags
+                    - type
+                    - contains
+                    - idRange
+                    - amount
+                    - lang
+                    - safe-mode
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - endpoints
+      - timestamp
+    PingResponse:
+      type: object
+      description: Ping envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        ping:
+          type: string
+          example: Pong!
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - ping
+      - timestamp
+    InfoResponse:
+      type: object
+      description: Runtime info envelope describing JokeAPI's current state.
+      properties:
+        error:
+          type: boolean
+          example: false
+        version:
+          type: string
+          description: Running JokeAPI version.
+          example: 2.3.3
+        jokes:
+          type: object
+          description: Joke catalogue snapshot.
+          properties:
+            totalCount:
+              type: integer
+              example: 1368
+            categories:
+              type: array
+              items:
+                type: string
+              example:
+              - Any
+              - Misc
+              - Programming
+              - Dark
+              - Pun
+              - Spooky
+              - Christmas
+            flags:
+              type: array
+              items:
+                type: string
+              example:
+              - nsfw
+              - religious
+              - political
+              - racist
+              - sexist
+              - explicit
+            types:
+              type: array
+              items:
+                type: string
+              example:
+              - single
+              - twopart
+            submissionURL:
+              type: string
+              example: https://v2.jokeapi.dev#submit
+            idRange:
+              type: object
+              description: Per-language ID range pair `[min, max]`.
+              additionalProperties:
+                type: array
+                items:
+                  type: integer
+                minItems: 2
+                maxItems: 2
+            safeJokes:
+              type: array
+              items:
+                type: object
+                properties:
+                  lang:
+                    type: string
+                  count:
+                    type: integer
+        formats:
+          type: array
+          items:
+            type: string
+          example:
+          - json
+          - xml
+          - yaml
+          - txt
+        jokeLanguages:
+          type: integer
+          example: 6
+        systemLanguages:
+          type: integer
+          example: 5
+        info:
+          type: string
+          example: If you want to stay up to date on the status and future updates of JokeAPI...
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - version
+      - jokes
+      - formats
+      - timestamp
