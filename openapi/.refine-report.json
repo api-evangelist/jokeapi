@@ -1,0 +1,18 @@
+{
+  "provider": "jokeapi",
+  "sources": [
+    "jokeapi-jokes-api-openapi.yml",
+    "jokeapi-metadata-api-openapi.yml",
+    "jokeapi-system-api-openapi.yml"
+  ],
+  "outputs": [
+    "jokeapi-jokes-api-openapi.yml",
+    "jokeapi-metadata-api-openapi.yml",
+    "jokeapi-system-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
