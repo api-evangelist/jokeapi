@@ -1,0 +1,31 @@
+name: JokeAPI FinOps
+description: Financial and operational cost considerations for integrating with JokeAPI.
+provider: JokeAPI
+url: https://jokeapi.dev/
+summary: JokeAPI is entirely free with no usage-based costs. All financial considerations relate to optional sponsorship and internal infrastructure costs for consumers.
+cost:
+  directCost: 0
+  currency: USD
+  model: free-open-source
+  notes:
+    - No API key purchase, subscription, or registration is required
+    - No metered billing for API calls
+    - No paid tiers or enterprise plans
+    - All endpoints available to all users at no cost
+optimization:
+  - tip: Cache joke responses locally to reduce repeated API calls and stay well within the 120 req/min budget
+  - tip: Use the /ping endpoint to monitor availability without consuming joke-fetch quota
+  - tip: Use ID range parameters to fetch specific jokes rather than fetching all jokes repeatedly
+  - tip: Batch requests using the "amount" parameter (up to 10 jokes per request) to reduce call count
+  - tip: Filter by category and flags at request time to avoid client-side filtering of excess results
+sponsorship:
+  description: JokeAPI is community-funded. Consider sponsoring to support continued operation.
+  url: https://github.com/sponsors/Sv443
+  platform: GitHub Sponsors
+risks:
+  - type: availability
+    description: As a free community project, uptime guarantees and SLAs are not offered; plan for graceful degradation
+  - type: rate-limit
+    description: The 120 req/min limit is shared across all IPs with no upgrade path; high-traffic apps should implement caching
+  - type: sustainability
+    description: The project relies on donations; long-term availability depends on community support

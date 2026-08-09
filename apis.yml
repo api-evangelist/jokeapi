@@ -1,12 +1,12 @@
 aid: jokeapi
 name: JokeAPI
-description: >-
-  JokeAPI is a free, open source REST API that delivers consistently formatted jokes in JSON, XML, YAML, or plain text.
-  It exposes seven joke categories (Any, Misc, Programming, Dark, Pun, Spooky, Christmas), six blacklist content flags
-  (nsfw, religious, political, racist, sexist, explicit), and filters for language, joke type, ID range, contains-text
-  search, amount, and safe-mode. No sign-up is required and CORS is enabled. The service is rate-limited at 120 requests
-  per minute per IP (5 per minute on submissions) and is maintained by Sv443 under the MIT license. The canonical source
-  lives on Sv443's own Git server, with this GitHub repo kept open for issues and the community wrapper-library index.
+description: JokeAPI is a free, open source REST API that delivers consistently formatted jokes in JSON,
+  XML, YAML, or plain text. It exposes seven joke categories (Any, Misc, Programming, Dark, Pun, Spooky,
+  Christmas), six blacklist content flags (nsfw, religious, political, racist, sexist, explicit), and
+  filters for language, joke type, ID range, contains-text search, amount, and safe-mode. No sign-up is
+  required and CORS is enabled. The service is rate-limited at 120 requests per minute per IP (5 per minute
+  on submissions) and is maintained by Sv443 under the MIT license. The canonical source lives on Sv443's
+  own Git server, with this GitHub repo kept open for issues and the community wrapper-library index.
 url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/apis.yml
 accessModel:
   pricing: free
@@ -22,19 +22,19 @@ accessModel:
   method: derived
 image: https://sv443.net/cdn/jokeapi/icon_readme.png
 tags:
-  - Jokes
-  - Humor
-  - Entertainment
-  - Open Source
-  - REST API
-  - Games And Comics
-  - Public APIs
+- Jokes
+- Humor
+- Entertainment
+- Open Source
+- REST API
+- Games And Comics
+- Public APIs
 type: Index
 access: 3rd-Party
 position: Consumer
 specificationVersion: '0.20'
 created: '2026-05-28'
-modified: '2026-05-29'
+modified: '2026-08-08'
 x-source: public-apis/public-apis
 x-category: Games & Comics
 x-type: opensource
@@ -186,92 +186,100 @@ apis:
   - type: SDKs
     url: https://github.com/canarado/joketeller
 common:
-  - type: AgenticAccess
-    url: agentic-access/jokeapi-agentic-access.yml
-  - type: DomainSecurity
-    url: security/jokeapi-domain-security.yml
-  - type: Website
-    url: https://jokeapi.dev/
-  - type: Documentation
-    url: https://jokeapi.dev/
-  - type: GitHub
-    url: https://github.com/Sv443-Network/JokeAPI
-  - type: SourceCode
-    url: https://git.sv443.net/sv443/JokeAPI-v2
-  - type: License
-    url: https://github.com/Sv443-Network/JokeAPI/blob/main/LICENSE.txt
-  - type: Discord
-    url: https://dc.sv443.net/
-  - type: StatusPage
-    url: https://status.sv443.net/
-  - type: Sponsor
-    url: https://github.com/sponsors/Sv443
-  - type: PublicAPIsListing
-    url: https://github.com/public-apis/public-apis
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/openapi/jokeapi-openapi.yml
-  - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-schema/jokeapi-single-joke-schema.json
-  - type: JSONLDContext
-    url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-ld/jokeapi-context.jsonld
-  - type: Plans
-    url: plans/jokeapi-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/jokeapi-rate-limits.yml
-  - type: SpectralRuleset
-    url: rules/jokeapi-spectral-rules.yml
-  - type: Vocabulary
-    url: vocabulary/jokeapi-vocabulary.yml
+- type: AgenticAccess
+  url: agentic-access/jokeapi-agentic-access.yml
+- type: DomainSecurity
+  url: security/jokeapi-domain-security.yml
+- type: Website
+  url: https://jokeapi.dev/
+- type: Documentation
+  url: https://jokeapi.dev/
+- type: GitHub
+  url: https://github.com/Sv443-Network/JokeAPI
+- type: SourceCode
+  url: https://git.sv443.net/sv443/JokeAPI-v2
+- type: License
+  url: https://github.com/Sv443-Network/JokeAPI/blob/main/LICENSE.txt
+- type: Discord
+  url: https://dc.sv443.net/
+- type: StatusPage
+  url: https://status.sv443.net/
+- type: Sponsor
+  url: https://github.com/sponsors/Sv443
+- type: PublicAPIsListing
+  url: https://github.com/public-apis/public-apis
+- type: OpenAPI
+  url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/openapi/jokeapi-openapi.yml
+- type: JSONSchema
+  url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-schema/jokeapi-single-joke-schema.json
+- type: JSONLDContext
+  url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/json-ld/jokeapi-context.jsonld
+- type: Plans
+  url: plans/jokeapi-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/jokeapi-rate-limits.yml
+- type: SpectralRuleset
+  url: rules/jokeapi-spectral-rules.yml
+- type: Vocabulary
+  url: vocabulary/jokeapi-vocabulary.yml
+- type: GitHubOrg
+  url: https://github.com/Sv443-Network
+- type: FinOps
+  url: finops/jokeapi-finops.yml
 features:
-  - name: Free and Open
-    description: No sign-up, no API key, MIT license, source open on git.sv443.net (mirrored on GitHub).
-  - name: Multi-Format Responses
-    description: Same data available as JSON (default), XML, YAML, or plain text via `?format`.
-  - name: Blacklist Flags
-    description: Filter out jokes flagged as nsfw, religious, political, racist, sexist, or explicit.
-  - name: Safe Mode
-    description: A single `?safe-mode` switch excludes every joke that carries any flag and every joke in the Dark category.
-  - name: Multi-Language Catalogue
-    description: Jokes available in English, German, Czech, Spanish, French, and Portuguese.
-  - name: Bulk Retrieval
-    description: Pull up to 10 jokes per request via `?amount`.
-  - name: ID and Contains Filters
-    description: Constrain results by joke ID, ID range, or full-text contains query.
-  - name: CORS Enabled
-    description: Browser apps can call the API directly without a proxy.
-  - name: Community Submissions
-    description: '`POST /submit` lets the community contribute new jokes (separate 5-per-minute rate limit, moderator review).'
+- name: Free and Open
+  description: No sign-up, no API key, MIT license, source open on git.sv443.net (mirrored on GitHub).
+- name: Multi-Format Responses
+  description: Same data available as JSON (default), XML, YAML, or plain text via `?format`.
+- name: Blacklist Flags
+  description: Filter out jokes flagged as nsfw, religious, political, racist, sexist, or explicit.
+- name: Safe Mode
+  description: A single `?safe-mode` switch excludes every joke that carries any flag and every joke in
+    the Dark category.
+- name: Multi-Language Catalogue
+  description: Jokes available in English, German, Czech, Spanish, French, and Portuguese.
+- name: Bulk Retrieval
+  description: Pull up to 10 jokes per request via `?amount`.
+- name: ID and Contains Filters
+  description: Constrain results by joke ID, ID range, or full-text contains query.
+- name: CORS Enabled
+  description: Browser apps can call the API directly without a proxy.
+- name: Community Submissions
+  description: '`POST /submit` lets the community contribute new jokes (separate 5-per-minute rate limit,
+    moderator review).'
 useCases:
-  - name: Chat Bots and Slack Apps
-    description: Drop a joke endpoint into a Discord, Slack, or Teams bot.
-  - name: Developer Easter Eggs
-    description: 404 pages, CLI surprises, build-success notifications.
-  - name: API Learning Sandbox
-    description: A safe, free target for OpenAPI tutorials, REST workshops, and SDK demos.
-  - name: Web Component Demos
-    description: Quick payloads to populate joke cards, comedy widgets, and humour newsletters.
-  - name: Content Moderation Training
-    description: Public dataset of jokes pre-classified with offensive-content flags, useful for moderation tooling tests.
+- name: Chat Bots and Slack Apps
+  description: Drop a joke endpoint into a Discord, Slack, or Teams bot.
+- name: Developer Easter Eggs
+  description: 404 pages, CLI surprises, build-success notifications.
+- name: API Learning Sandbox
+  description: A safe, free target for OpenAPI tutorials, REST workshops, and SDK demos.
+- name: Web Component Demos
+  description: Quick payloads to populate joke cards, comedy widgets, and humour newsletters.
+- name: Content Moderation Training
+  description: Public dataset of jokes pre-classified with offensive-content flags, useful for moderation
+    tooling tests.
 integrations:
-  - name: Node.js wrapper
-  - name: Python wrapper
-  - name: TypeScript wrapper
-  - name: C# wrapper
-  - name: Dart wrapper
-  - name: Go wrapper
-  - name: Java wrappers
-  - name: Kotlin / Android wrapper
-  - name: Odin wrapper
-  - name: PHP wrapper
-  - name: Rust wrapper
+- name: Node.js wrapper
+- name: Python wrapper
+- name: TypeScript wrapper
+- name: C# wrapper
+- name: Dart wrapper
+- name: Go wrapper
+- name: Java wrappers
+- name: Kotlin / Android wrapper
+- name: Odin wrapper
+- name: PHP wrapper
+- name: Rust wrapper
 solutions:
-  - name: Daily Joke Feed
-    description: Cron a fetch every morning into a Slack channel, RSS feed, or static site build.
-  - name: Comedy CMS
-    description: Combine `/joke/{category}` with `/submit` to power a community-driven joke board.
-  - name: Safe-by-Default Embed
-    description: Use `?safe-mode` plus `?blacklistFlags` to deliver workplace-safe humour widgets.
+- name: Daily Joke Feed
+  description: Cron a fetch every morning into a Slack channel, RSS feed, or static site build.
+- name: Comedy CMS
+  description: Combine `/joke/{category}` with `/submit` to power a community-driven joke board.
+- name: Safe-by-Default Embed
+  description: Use `?safe-mode` plus `?blacklistFlags` to deliver workplace-safe humour widgets.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-merged-from:
+- joke-api

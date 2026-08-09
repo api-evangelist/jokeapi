@@ -1,0 +1,123 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "api": "https://schema.org/WebAPI",
+    "openapi": "https://schema.org/documentation"
+  },
+  "@type": "WebAPI",
+  "@id": "https://jokeapi.dev/",
+  "name": "JokeAPI",
+  "description": "JokeAPI is a free, open-source REST API that delivers consistently formatted jokes with no authentication, registration, or payment required. It provides over 1,368 jokes across categories including Programming, Misc, Dark, Pun, Spooky, and Christmas in 6 languages.",
+  "url": "https://jokeapi.dev/",
+  "version": "2.3.3",
+  "documentation": "https://jokeapi.dev/",
+  "license": "https://github.com/Sv443-Network/JokeAPI/blob/main/LICENSE",
+  "termsOfService": "https://jokeapi.dev/",
+  "provider": {
+    "@type": "Organization",
+    "name": "Sv443 Network",
+    "url": "https://github.com/Sv443-Network",
+    "sameAs": [
+      "https://sv443.net/discord",
+      "https://status.sv443.net/"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Free, no authentication required"
+  },
+  "category": [
+    "Jokes",
+    "Humor",
+    "Entertainment",
+    "Programming Jokes",
+    "Dark Humor",
+    "Puns"
+  ],
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://v2.jokeapi.dev",
+    "availableLanguage": [
+      "English",
+      "German",
+      "Russian",
+      "Czech",
+      "Portuguese",
+      "Spanish"
+    ]
+  },
+  "serviceOutput": {
+    "@type": "DataFeed",
+    "description": "Jokes returned in JSON, XML, YAML, or plain text format",
+    "encodingFormat": [
+      "application/json",
+      "application/xml",
+      "application/x-yaml",
+      "text/plain"
+    ]
+  },
+  "hasPart": [
+    {
+      "@type": "EntryPoint",
+      "name": "Get Joke",
+      "urlTemplate": "https://v2.jokeapi.dev/joke/{category}",
+      "httpMethod": "GET",
+      "description": "Retrieve a random joke from the specified category or categories"
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "API Info",
+      "urlTemplate": "https://v2.jokeapi.dev/info",
+      "httpMethod": "GET",
+      "description": "Returns API metadata, versions, available categories, flags, formats, and languages"
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "Categories",
+      "urlTemplate": "https://v2.jokeapi.dev/categories",
+      "httpMethod": "GET",
+      "description": "Lists all available joke categories and aliases"
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "Languages",
+      "urlTemplate": "https://v2.jokeapi.dev/languages",
+      "httpMethod": "GET",
+      "description": "Lists all supported joke and system languages with ISO codes"
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "Flags",
+      "urlTemplate": "https://v2.jokeapi.dev/flags",
+      "httpMethod": "GET",
+      "description": "Lists all available content blacklist flags"
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "Formats",
+      "urlTemplate": "https://v2.jokeapi.dev/formats",
+      "httpMethod": "GET",
+      "description": "Lists all available response formats"
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "Ping",
+      "urlTemplate": "https://v2.jokeapi.dev/ping",
+      "httpMethod": "GET",
+      "description": "Uptime check endpoint returning Pong!"
+    },
+    {
+      "@type": "EntryPoint",
+      "name": "Submit Joke",
+      "urlTemplate": "https://v2.jokeapi.dev/submit",
+      "httpMethod": "POST",
+      "description": "Programmatically submit jokes for review"
+    }
+  ],
+  "sameAs": [
+    "https://github.com/Sv443-Network/JokeAPI",
+    "https://status.sv443.net/"
+  ]
+}

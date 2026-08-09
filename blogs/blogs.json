@@ -1,0 +1,19 @@
+{
+  "aid": "joke-api",
+  "name": "JokeAPI",
+  "description": "Blog and changelog feed for JokeAPI",
+  "url": "https://github.com/Sv443-Network/JokeAPI/blob/main/changelog.md",
+  "created": "2026-06-13",
+  "modified": "2026-06-13",
+  "blogs": [
+    {
+      "title": "JokeAPI Changelog",
+      "url": "https://github.com/Sv443-Network/JokeAPI/blob/main/changelog.md",
+      "type": "Changelog",
+      "description": "Official changelog for JokeAPI tracking version history and feature updates",
+      "source": "https://github.com/Sv443-Network/JokeAPI"
+    }
+  ],
+  "feeds": [],
+  "lastFetched": "2026-06-13"
+}
