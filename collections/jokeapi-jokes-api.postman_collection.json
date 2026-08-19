@@ -1,0 +1,650 @@
+{
+  "item": [
+    {
+      "id": "bfd51e0d-7472-4167-b407-5526ad6432a3",
+      "name": "Jokes",
+      "description": {
+        "content": "Operations for retrieving and submitting jokes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4a8a391b-96f4-437f-81c9-aaead57b16c1",
+          "name": "JokeAPI Get Joke by Category",
+          "request": {
+            "name": "JokeAPI Get Joke by Category",
+            "description": {
+              "content": "Retrieve one or more jokes from a single category, a comma-separated list of categories, or the special value `Any`. Supports filtering by blacklist flags, joke type, language, ID range, contains-text search, amount, and safe-mode.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "joke",
+                ":category"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "en",
+                  "description": "ISO 639-1 language code for the joke language. Supported jokes languages include `en`, `de`, `cs`, `es`, `fr`, `pt`. Defaults to `en`."
+                },
+                {
+                  "disabled": false,
+                  "key": "blacklistFlags",
+                  "value": "<string>",
+                  "description": "Comma-separated list of flags to exclude (`nsfw`, `religious`, `political`, `racist`, `sexist`, `explicit`). Any joke carrying at least one listed flag is filtered out."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Restrict results to a single joke type."
+                },
+                {
+                  "disabled": false,
+                  "key": "contains",
+                  "value": "<string>",
+                  "description": "URL-encoded substring that must appear in the joke text (or the setup/delivery of a twopart joke)."
+                },
+                {
+                  "disabled": false,
+                  "key": "idRange",
+                  "value": "<string>",
+                  "description": "Inclusive ID range (e.g. `0-50`) or a single ID (e.g. `42`) to constrain results."
+                },
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "1",
+                  "description": "Number of jokes to retrieve (1-10). Defaults to 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "safe-mode",
+                  "value": "<string>",
+                  "description": "When present (no value required), exclude any joke that carries any flag and any joke categorised as Dark."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "category",
+                  "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc0ed763-d1d1-4841-8f17-8707f6aebe59",
+              "name": "A single joke, an envelope of multiple jokes, or an error envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"id\": 127,\n  \"safe\": true,\n  \"lang\": \"en\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9dd2e41-428d-483d-95ab-3a8fd123897c",
+              "name": "Malformed request (e.g. unknown category or invalid parameter).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 106,\n  \"message\": \"No matching joke found\",\n  \"causedBy\": [\n    \"No jokes were found that match your provided filter(s).\"\n  ],\n  \"additionalInfo\": \"Try removing the safe-mode or blacklistFlags filters.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0453eea8-7e88-472c-896b-b6624d4f3581",
+              "name": "No joke matches the given filters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 106,\n  \"message\": \"No matching joke found\",\n  \"causedBy\": [\n    \"No jokes were found that match your provided filter(s).\"\n  ],\n  \"additionalInfo\": \"Try removing the safe-mode or blacklistFlags filters.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0adc2f7c-6244-4d98-9e46-edf8b80c33da",
+              "name": "Rate-limit exceeded (120 requests per minute per IP).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "joke",
+                    ":category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    },
+                    {
+                      "key": "blacklistFlags",
+                      "value": "nsfw,racist,sexist"
+                    },
+                    {
+                      "key": "type",
+                      "value": "twopart"
+                    },
+                    {
+                      "key": "contains",
+                      "value": "developer"
+                    },
+                    {
+                      "key": "idRange",
+                      "value": "0-50"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "1"
+                    },
+                    {
+                      "key": "safe-mode",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "category",
+                      "description": "(Required) Category or comma-separated list of categories. Use `Any` to draw from all categories."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 101,\n  \"message\": \"Rate limit exceeded\",\n  \"causedBy\": [\n    \"You exceeded 120 requests per minute.\"\n  ],\n  \"additionalInfo\": \"Wait until the Retry-After window expires.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a84eff15-be26-4322-90c7-74ba112f5476",
+          "name": "JokeAPI Submit Joke",
+          "request": {
+            "name": "JokeAPI Submit Joke",
+            "description": {
+              "content": "Submit a joke for moderator review. Submissions are rate-limited separately at 5 per minute per IP. Pass `?dry-run` to validate the payload structure without persisting the submission.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "submit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "dry-run",
+                  "value": "<string>",
+                  "description": "When present, the submission is validated for shape but not persisted. No value is required."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"formatVersion\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"type\": \"<string>\",\n  \"flags\": {\n    \"nsfw\": \"<boolean>\",\n    \"religious\": \"<boolean>\",\n    \"political\": \"<boolean>\",\n    \"racist\": \"<boolean>\",\n    \"sexist\": \"<boolean>\",\n    \"explicit\": \"<boolean>\"\n  },\n  \"lang\": \"<string>\",\n  \"joke\": \"<string>\",\n  \"setup\": \"<string>\",\n  \"delivery\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ce9a608a-219c-4c1b-803b-f69f75c25906",
+              "name": "Submission accepted (or validated successfully in dry-run mode).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "dry-run",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"formatVersion\": 3,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"lang\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"message\": \"Joke submission was successful.\",\n  \"submission\": {\n    \"formatVersion\": 3,\n    \"category\": \"Programming\",\n    \"type\": \"twopart\",\n    \"setup\": \"Why don't programmers like nature?\",\n    \"delivery\": \"It has too many bugs.\",\n    \"flags\": {\n      \"nsfw\": false,\n      \"religious\": false,\n      \"political\": false,\n      \"racist\": false,\n      \"sexist\": false,\n      \"explicit\": false\n    },\n    \"lang\": \"en\"\n  },\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51569ad8-8b82-4fda-bfae-7319e0b9a117",
+              "name": "Submission failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "dry-run",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"formatVersion\": 3,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"lang\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 105,\n  \"message\": \"Submission malformed\",\n  \"causedBy\": [\n    \"The provided payload does not match the expected JokeSubmission schema.\"\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbde4119-7a4a-4ed2-890c-af6cf1479203",
+              "name": "Submission rate-limit exceeded (5 per minute per IP).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "dry-run",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"formatVersion\": 3,\n  \"category\": \"Programming\",\n  \"type\": \"twopart\",\n  \"setup\": \"Why don't programmers like nature?\",\n  \"delivery\": \"It has too many bugs.\",\n  \"flags\": {\n    \"nsfw\": false,\n    \"religious\": false,\n    \"political\": false,\n    \"racist\": false,\n    \"sexist\": false,\n    \"explicit\": false\n  },\n  \"lang\": \"en\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": true,\n  \"internalError\": false,\n  \"code\": 101,\n  \"message\": \"Submission rate limit exceeded\",\n  \"causedBy\": [\n    \"You exceeded 5 submissions per minute.\"\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://v2.jokeapi.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9a68c8f2-1868-4a94-bae8-5721fbf591fb",
+    "name": "Joke Jokes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JokeAPI is a free and open REST API that delivers consistently formatted jokes in JSON, XML, YAML, or plain text. Powerful filters let consumers narrow jokes by category, language, content flags, type, ID range, or full-text contains search, with optional safe-mode to exclude any joke that carries a blacklist flag. The API requires no sign-up, supports CORS, and is rate-limited per IP. Open source under the MIT license, maintained by Sv443.\n\nContact Support:\n Name: Sv443",
+      "type": "text/plain"
+    }
+  }
+}

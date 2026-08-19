@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Joke Jokes System API",
+    "version": "2.3.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "JokeAPI Get Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/info",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "ISO 639-1 system language for the response messages."
+              }
+            ]
+          },
+          "docs": "Return runtime metadata about JokeAPI — version, total joke count, the full list of categories, flags, types, supported formats, language counts, per-language ID ranges, and per-language safe-joke counts."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/endpoints",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "List every documented endpoint exposed by JokeAPI, including its URL, usage notes, and supported response formats."
+        },
+        {
+          "info": {
+            "name": "JokeAPI Ping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/ping",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "Lightweight uptime endpoint. Returns a short payload confirming the API is reachable and reporting the server timestamp."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

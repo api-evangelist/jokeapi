@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Joke Jokes Metadata API",
+    "version": "2.3.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "JokeAPI List Categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/categories",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "ISO 639-1 system language for the response messages."
+              }
+            ]
+          },
+          "docs": "List every joke category JokeAPI exposes, plus the recognised category aliases. Use one of the returned categories as the path parameter to `/joke/{category}`."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Blacklist Flags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/flags",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "List the blacklist flags consumers can pass to `?blacklistFlags`. Each flag indicates a category of potentially offensive content."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Response Formats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/formats",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "List the response formats JokeAPI can return. Values map to the `?format` query parameter on every other endpoint."
+        },
+        {
+          "info": {
+            "name": "JokeAPI List Supported Languages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/languages",
+            "params": [
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "ISO 639-1 system language for the response messages."
+              }
+            ]
+          },
+          "docs": "List the joke languages and the system languages JokeAPI supports. Joke languages have at least one joke available; system languages affect error-message localisation."
+        },
+        {
+          "info": {
+            "name": "JokeAPI Resolve Language Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://v2.jokeapi.dev/langcode/:language",
+            "params": [
+              {
+                "name": "language",
+                "value": "german",
+                "type": "path",
+                "description": "Human-readable language name in English."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Response format. Defaults to `json`."
+              }
+            ]
+          },
+          "docs": "Resolve a human-readable language name (e.g. `german`) to its ISO 639-1 language code (e.g. `de`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

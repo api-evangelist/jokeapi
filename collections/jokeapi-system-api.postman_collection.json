@@ -1,0 +1,288 @@
+{
+  "item": [
+    {
+      "id": "418abaee-3366-4458-9be7-0c7df904afaf",
+      "name": "System",
+      "description": {
+        "content": "Health and discovery endpoints.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a419837-3ab2-4b09-8ce5-6c8c8e65cb13",
+          "name": "JokeAPI Get Info",
+          "request": {
+            "name": "JokeAPI Get Info",
+            "description": {
+              "content": "Return runtime metadata about JokeAPI — version, total joke count, the full list of categories, flags, types, supported formats, language counts, per-language ID ranges, and per-language safe-joke counts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "en",
+                  "description": "ISO 639-1 system language for the response messages."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "31d5efb3-3661-461e-8534-d3e7678dfcdb",
+              "name": "Runtime info envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "en"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"version\": \"2.3.3\",\n  \"jokes\": {\n    \"totalCount\": 1368,\n    \"categories\": [\n      \"Any\",\n      \"Misc\",\n      \"Programming\",\n      \"Dark\",\n      \"Pun\",\n      \"Spooky\",\n      \"Christmas\"\n    ],\n    \"flags\": [\n      \"nsfw\",\n      \"religious\",\n      \"political\",\n      \"racist\",\n      \"sexist\",\n      \"explicit\"\n    ],\n    \"types\": [\n      \"single\",\n      \"twopart\"\n    ],\n    \"submissionURL\": \"https://v2.jokeapi.dev#submit\",\n    \"idRange\": {\n      \"en\": [\n        0,\n        318\n      ],\n      \"de\": [\n        0,\n        35\n      ]\n    },\n    \"safeJokes\": [\n      {\n        \"lang\": \"en\",\n        \"count\": 183\n      },\n      {\n        \"lang\": \"de\",\n        \"count\": 29\n      }\n    ]\n  },\n  \"formats\": [\n    \"json\",\n    \"xml\",\n    \"yaml\",\n    \"txt\"\n  ],\n  \"jokeLanguages\": 6,\n  \"systemLanguages\": 5,\n  \"info\": \"If you want to stay up to date on the status and future updates of JokeAPI, consider joining the Discord server.\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bcf16795-7daf-434e-a80f-d550c657541c",
+          "name": "JokeAPI List Endpoints",
+          "request": {
+            "name": "JokeAPI List Endpoints",
+            "description": {
+              "content": "List every documented endpoint exposed by JokeAPI, including its URL, usage notes, and supported response formats.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "endpoints"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "791c7bf0-239c-4368-808d-e1fc1547c2f5",
+              "name": "Endpoints envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "endpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"endpoints\": [\n    {\n      \"name\": \"Joke\",\n      \"usage\": {\n        \"method\": \"GET\",\n        \"url\": \"https://v2.jokeapi.dev/joke/{category}\",\n        \"supportedParams\": [\n          \"format\",\n          \"blacklistFlags\",\n          \"type\",\n          \"contains\",\n          \"idRange\",\n          \"amount\",\n          \"lang\",\n          \"safe-mode\"\n        ]\n      }\n    }\n  ],\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11e8fdfc-1abb-4786-aaa2-0161adbd8007",
+          "name": "JokeAPI Ping",
+          "request": {
+            "name": "JokeAPI Ping",
+            "description": {
+              "content": "Lightweight uptime endpoint. Returns a short payload confirming the API is reachable and reporting the server timestamp.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to `json`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "107dab7c-3043-494b-b1c1-f795b2635fd4",
+              "name": "Ping envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": false,\n  \"ping\": \"Pong!\",\n  \"timestamp\": 1780051223357\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://v2.jokeapi.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "340609ce-51ba-4ff5-bb71-aa37218bee24",
+    "name": "Joke Jokes System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JokeAPI is a free and open REST API that delivers consistently formatted jokes in JSON, XML, YAML, or plain text. Powerful filters let consumers narrow jokes by category, language, content flags, type, ID range, or full-text contains search, with optional safe-mode to exclude any joke that carries a blacklist flag. The API requires no sign-up, supports CORS, and is rate-limited per IP. Open source under the MIT license, maintained by Sv443.\n\nContact Support:\n Name: Sv443",
+      "type": "text/plain"
+    }
+  }
+}
