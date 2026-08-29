@@ -8,6 +8,18 @@ description: JokeAPI is a free, open source REST API that delivers consistently 
   on submissions) and is maintained by Sv443 under the MIT license. The canonical source lives on Sv443's
   own Git server, with this GitHub repo kept open for issues and the community wrapper-library index.
 url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: open
