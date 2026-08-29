@@ -13,6 +13,11 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "jokeapi-jokes-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "jokeapi-metadata-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "jokeapi-system-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

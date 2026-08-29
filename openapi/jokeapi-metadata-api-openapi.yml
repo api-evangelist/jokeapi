@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Joke Jokes Metadata API
   description: JokeAPI is a free and open REST API that delivers consistently formatted jokes in JSON, XML, YAML, or plain text. Powerful filters let consumers narrow jokes by category, language, content flags, type, ID range, or full-text contains search, with optional safe-mode to exclude any joke that carries a blacklist flag. The API requires no sign-up, supports CORS, and is rate-limited per IP. Open source under the MIT license, maintained by Sv443.
@@ -302,6 +302,90 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    JokeError:
+      type: object
+      description: Error envelope returned for any failed request.
+      properties:
+        error:
+          type: boolean
+          example: true
+        internalError:
+          type: boolean
+          description: True when the failure originated server-side rather than from input.
+          example: false
+        code:
+          type: integer
+          description: JokeAPI internal error code.
+          example: 106
+        message:
+          type: string
+          description: Short error label.
+          example: No matching joke found
+        causedBy:
+          type: array
+          description: Human-readable reasons the request failed.
+          items:
+            type: string
+          example:
+          - No jokes were found that match your provided filter(s).
+        additionalInfo:
+          type: string
+          description: Optional hint to help the consumer correct the request.
+          example: Try removing the safe-mode or blacklistFlags filters.
+        timestamp:
+          type: integer
+          description: Server-side Unix epoch timestamp in milliseconds.
+          example: 1780051223357
+      required:
+      - error
+      - code
+      - message
+      - causedBy
+      - timestamp
+    LangcodeResponse:
+      type: object
+      description: Language-code resolution envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        code:
+          type: string
+          description: Resolved ISO 639-1 language code.
+          example: de
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - code
+      - timestamp
+    FlagsResponse:
+      type: object
+      description: Blacklist flags metadata envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        flags:
+          type: array
+          description: Flags consumers can pass to `?blacklistFlags`.
+          items:
+            type: string
+          example:
+          - nsfw
+          - religious
+          - political
+          - racist
+          - sexist
+          - explicit
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - flags
+      - timestamp
     CategoriesResponse:
       type: object
       description: Categories metadata envelope.
@@ -342,71 +426,29 @@ components:
       - error
       - categories
       - timestamp
-    FlagsResponse:
+    FormatsResponse:
       type: object
-      description: Blacklist flags metadata envelope.
+      description: Response-format metadata envelope.
       properties:
         error:
           type: boolean
           example: false
-        flags:
+        formats:
           type: array
-          description: Flags consumers can pass to `?blacklistFlags`.
+          description: Response formats accepted by `?format`.
           items:
             type: string
           example:
-          - nsfw
-          - religious
-          - political
-          - racist
-          - sexist
-          - explicit
+          - json
+          - xml
+          - yaml
+          - txt
         timestamp:
           type: integer
           example: 1780051223357
       required:
       - error
-      - flags
-      - timestamp
-    JokeError:
-      type: object
-      description: Error envelope returned for any failed request.
-      properties:
-        error:
-          type: boolean
-          example: true
-        internalError:
-          type: boolean
-          description: True when the failure originated server-side rather than from input.
-          example: false
-        code:
-          type: integer
-          description: JokeAPI internal error code.
-          example: 106
-        message:
-          type: string
-          description: Short error label.
-          example: No matching joke found
-        causedBy:
-          type: array
-          description: Human-readable reasons the request failed.
-          items:
-            type: string
-          example:
-          - No jokes were found that match your provided filter(s).
-        additionalInfo:
-          type: string
-          description: Optional hint to help the consumer correct the request.
-          example: Try removing the safe-mode or blacklistFlags filters.
-        timestamp:
-          type: integer
-          description: Server-side Unix epoch timestamp in milliseconds.
-          example: 1780051223357
-      required:
-      - error
-      - code
-      - message
-      - causedBy
+      - formats
       - timestamp
     LanguagesResponse:
       type: object
@@ -462,46 +504,4 @@ components:
       - defaultLanguage
       - jokeLanguages
       - systemLanguages
-      - timestamp
-    FormatsResponse:
-      type: object
-      description: Response-format metadata envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        formats:
-          type: array
-          description: Response formats accepted by `?format`.
-          items:
-            type: string
-          example:
-          - json
-          - xml
-          - yaml
-          - txt
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - formats
-      - timestamp
-    LangcodeResponse:
-      type: object
-      description: Language-code resolution envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        code:
-          type: string
-          description: Resolved ISO 639-1 language code.
-          example: de
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - code
       - timestamp
