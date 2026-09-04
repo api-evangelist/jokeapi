@@ -51,7 +51,7 @@ tags_raw:
 - Public APIs
 type: Index
 access: 3rd-Party
-position: Consumer
+position: Consuming
 specificationVersion: '0.23'
 created: '2026-05-28'
 modified: '2026-08-08'
