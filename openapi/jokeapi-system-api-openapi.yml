@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Joke Jokes System API
+  title: Joke System API
   description: JokeAPI is a free and open REST API that delivers consistently formatted jokes in JSON, XML, YAML, or plain text. Powerful filters let consumers narrow jokes by category, language, content flags, type, ID range, or full-text contains search, with optional safe-mode to exclude any joke that carries a blacklist flag. The API requires no sign-up, supports CORS, and is rate-limited per IP. Open source under the MIT license, maintained by Sv443.
   version: 2.3.3
   contact:
@@ -201,23 +201,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    PingResponse:
-      type: object
-      description: Ping envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        ping:
-          type: string
-          example: Pong!
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - ping
-      - timestamp
     EndpointsResponse:
       type: object
       description: Endpoint catalogue envelope.
@@ -261,6 +244,23 @@ components:
       required:
       - error
       - endpoints
+      - timestamp
+    PingResponse:
+      type: object
+      description: Ping envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        ping:
+          type: string
+          example: Pong!
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - ping
       - timestamp
     InfoResponse:
       type: object

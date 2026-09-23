@@ -335,46 +335,113 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    JokeError:
+    JokeBatch:
       type: object
-      description: Error envelope returned for any failed request.
+      description: Envelope returned when `?amount` is greater than 1.
       properties:
         error:
           type: boolean
-          example: true
-        internalError:
-          type: boolean
-          description: True when the failure originated server-side rather than from input.
           example: false
-        code:
+        amount:
           type: integer
-          description: JokeAPI internal error code.
-          example: 106
-        message:
-          type: string
-          description: Short error label.
-          example: No matching joke found
-        causedBy:
+          description: Number of jokes in this batch.
+          example: 3
+        jokes:
           type: array
-          description: Human-readable reasons the request failed.
+          description: Heterogeneous list of single and twopart jokes.
           items:
-            type: string
-          example:
-          - No jokes were found that match your provided filter(s).
-        additionalInfo:
-          type: string
-          description: Optional hint to help the consumer correct the request.
-          example: Try removing the safe-mode or blacklistFlags filters.
-        timestamp:
-          type: integer
-          description: Server-side Unix epoch timestamp in milliseconds.
-          example: 1780051223357
+            oneOf:
+            - $ref: '#/components/schemas/SingleJoke'
+            - $ref: '#/components/schemas/TwopartJoke'
       required:
       - error
-      - code
-      - message
-      - causedBy
-      - timestamp
+      - amount
+      - jokes
+    JokeFlags:
+      type: object
+      description: Content classification flags carried on every joke.
+      properties:
+        nsfw:
+          type: boolean
+          description: Joke contains adult or explicit sexual content.
+          example: false
+        religious:
+          type: boolean
+          description: Joke references or mocks religion.
+          example: false
+        political:
+          type: boolean
+          description: Joke references politics or political figures.
+          example: false
+        racist:
+          type: boolean
+          description: Joke contains racist content.
+          example: false
+        sexist:
+          type: boolean
+          description: Joke contains sexist content.
+          example: false
+        explicit:
+          type: boolean
+          description: Joke contains explicit language unrelated to NSFW.
+          example: false
+      required:
+      - nsfw
+      - religious
+      - political
+      - racist
+      - sexist
+      - explicit
+    JokeSubmission:
+      type: object
+      description: Submission payload for `POST /submit`.
+      properties:
+        formatVersion:
+          type: integer
+          description: Submission format version. Currently `3`.
+          example: 3
+        category:
+          type: string
+          description: Target category for the joke.
+          enum:
+          - Misc
+          - Programming
+          - Dark
+          - Pun
+          - Spooky
+          - Christmas
+          example: Programming
+        type:
+          type: string
+          description: Joke shape.
+          enum:
+          - single
+          - twopart
+          example: twopart
+        joke:
+          type: string
+          description: Joke text (required when `type` is `single`).
+          example: Why do programmers prefer dark mode? Because light attracts bugs.
+        setup:
+          type: string
+          description: Setup line (required when `type` is `twopart`).
+          example: Why don't programmers like nature?
+        delivery:
+          type: string
+          description: Punchline (required when `type` is `twopart`).
+          example: It has too many bugs.
+        flags:
+          $ref: '#/components/schemas/JokeFlags'
+        lang:
+          type: string
+          description: ISO 639-1 language code of the joke.
+          example: en
+      required:
+      - formatVersion
+      - category
+      - type
+      - flags
+      - lang
     SingleJoke:
       type: object
       description: A joke delivered as one line of text.
@@ -427,41 +494,6 @@ components:
       - id
       - safe
       - lang
-    JokeFlags:
-      type: object
-      description: Content classification flags carried on every joke.
-      properties:
-        nsfw:
-          type: boolean
-          description: Joke contains adult or explicit sexual content.
-          example: false
-        religious:
-          type: boolean
-          description: Joke references or mocks religion.
-          example: false
-        political:
-          type: boolean
-          description: Joke references politics or political figures.
-          example: false
-        racist:
-          type: boolean
-          description: Joke contains racist content.
-          example: false
-        sexist:
-          type: boolean
-          description: Joke contains sexist content.
-          example: false
-        explicit:
-          type: boolean
-          description: Joke contains explicit language unrelated to NSFW.
-          example: false
-      required:
-      - nsfw
-      - religious
-      - political
-      - racist
-      - sexist
-      - explicit
     SubmissionResponse:
       type: object
       description: Submission response envelope.
@@ -538,75 +570,43 @@ components:
       - id
       - safe
       - lang
-    JokeBatch:
+    JokeError:
       type: object
-      description: Envelope returned when `?amount` is greater than 1.
+      description: Error envelope returned for any failed request.
       properties:
         error:
           type: boolean
+          example: true
+        internalError:
+          type: boolean
+          description: True when the failure originated server-side rather than from input.
           example: false
-        amount:
+        code:
           type: integer
-          description: Number of jokes in this batch.
-          example: 3
-        jokes:
+          description: JokeAPI internal error code.
+          example: 106
+        message:
+          type: string
+          description: Short error label.
+          example: No matching joke found
+        causedBy:
           type: array
-          description: Heterogeneous list of single and twopart jokes.
+          description: Human-readable reasons the request failed.
           items:
-            oneOf:
-            - $ref: '#/components/schemas/SingleJoke'
-            - $ref: '#/components/schemas/TwopartJoke'
+            type: string
+          example:
+          - No jokes were found that match your provided filter(s).
+        additionalInfo:
+          type: string
+          description: Optional hint to help the consumer correct the request.
+          example: Try removing the safe-mode or blacklistFlags filters.
+        timestamp:
+          type: integer
+          description: Server-side Unix epoch timestamp in milliseconds.
+          example: 1780051223357
       required:
       - error
-      - amount
-      - jokes
-    JokeSubmission:
-      type: object
-      description: Submission payload for `POST /submit`.
-      properties:
-        formatVersion:
-          type: integer
-          description: Submission format version. Currently `3`.
-          example: 3
-        category:
-          type: string
-          description: Target category for the joke.
-          enum:
-          - Misc
-          - Programming
-          - Dark
-          - Pun
-          - Spooky
-          - Christmas
-          example: Programming
-        type:
-          type: string
-          description: Joke shape.
-          enum:
-          - single
-          - twopart
-          example: twopart
-        joke:
-          type: string
-          description: Joke text (required when `type` is `single`).
-          example: Why do programmers prefer dark mode? Because light attracts bugs.
-        setup:
-          type: string
-          description: Setup line (required when `type` is `twopart`).
-          example: Why don't programmers like nature?
-        delivery:
-          type: string
-          description: Punchline (required when `type` is `twopart`).
-          example: It has too many bugs.
-        flags:
-          $ref: '#/components/schemas/JokeFlags'
-        lang:
-          type: string
-          description: ISO 639-1 language code of the joke.
-          example: en
-      required:
-      - formatVersion
-      - category
-      - type
-      - flags
-      - lang
+      - code
+      - message
+      - causedBy
+      - timestamp

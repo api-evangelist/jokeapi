@@ -1,9 +1,7 @@
 {
   "provider": "jokeapi",
   "sources": [
-    "jokeapi-jokes-api-openapi.yml",
-    "jokeapi-metadata-api-openapi.yml",
-    "jokeapi-system-api-openapi.yml"
+    "_ae-authored/jokeapi-openapi.yml"
   ],
   "outputs": [
     "jokeapi-jokes-api-openapi.yml",
@@ -14,10 +12,13 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "jokeapi-jokes-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "jokeapi-metadata-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "jokeapi-system-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "jokeapi-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "jokeapi-jokes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jokeapi-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jokeapi-system-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
