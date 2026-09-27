@@ -302,29 +302,31 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    FormatsResponse:
+    FlagsResponse:
       type: object
-      description: Response-format metadata envelope.
+      description: Blacklist flags metadata envelope.
       properties:
         error:
           type: boolean
           example: false
-        formats:
+        flags:
           type: array
-          description: Response formats accepted by `?format`.
+          description: Flags consumers can pass to `?blacklistFlags`.
           items:
             type: string
           example:
-          - json
-          - xml
-          - yaml
-          - txt
+          - nsfw
+          - religious
+          - political
+          - racist
+          - sexist
+          - explicit
         timestamp:
           type: integer
           example: 1780051223357
       required:
       - error
-      - formats
+      - flags
       - timestamp
     CategoriesResponse:
       type: object
@@ -365,6 +367,88 @@ components:
       required:
       - error
       - categories
+      - timestamp
+    FormatsResponse:
+      type: object
+      description: Response-format metadata envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        formats:
+          type: array
+          description: Response formats accepted by `?format`.
+          items:
+            type: string
+          example:
+          - json
+          - xml
+          - yaml
+          - txt
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - formats
+      - timestamp
+    JokeError:
+      type: object
+      description: Error envelope returned for any failed request.
+      properties:
+        error:
+          type: boolean
+          example: true
+        internalError:
+          type: boolean
+          description: True when the failure originated server-side rather than from input.
+          example: false
+        code:
+          type: integer
+          description: JokeAPI internal error code.
+          example: 106
+        message:
+          type: string
+          description: Short error label.
+          example: No matching joke found
+        causedBy:
+          type: array
+          description: Human-readable reasons the request failed.
+          items:
+            type: string
+          example:
+          - No jokes were found that match your provided filter(s).
+        additionalInfo:
+          type: string
+          description: Optional hint to help the consumer correct the request.
+          example: Try removing the safe-mode or blacklistFlags filters.
+        timestamp:
+          type: integer
+          description: Server-side Unix epoch timestamp in milliseconds.
+          example: 1780051223357
+      required:
+      - error
+      - code
+      - message
+      - causedBy
+      - timestamp
+    LangcodeResponse:
+      type: object
+      description: Language-code resolution envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        code:
+          type: string
+          description: Resolved ISO 639-1 language code.
+          example: de
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - code
       - timestamp
     LanguagesResponse:
       type: object
@@ -420,88 +504,4 @@ components:
       - defaultLanguage
       - jokeLanguages
       - systemLanguages
-      - timestamp
-    LangcodeResponse:
-      type: object
-      description: Language-code resolution envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        code:
-          type: string
-          description: Resolved ISO 639-1 language code.
-          example: de
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - code
-      - timestamp
-    JokeError:
-      type: object
-      description: Error envelope returned for any failed request.
-      properties:
-        error:
-          type: boolean
-          example: true
-        internalError:
-          type: boolean
-          description: True when the failure originated server-side rather than from input.
-          example: false
-        code:
-          type: integer
-          description: JokeAPI internal error code.
-          example: 106
-        message:
-          type: string
-          description: Short error label.
-          example: No matching joke found
-        causedBy:
-          type: array
-          description: Human-readable reasons the request failed.
-          items:
-            type: string
-          example:
-          - No jokes were found that match your provided filter(s).
-        additionalInfo:
-          type: string
-          description: Optional hint to help the consumer correct the request.
-          example: Try removing the safe-mode or blacklistFlags filters.
-        timestamp:
-          type: integer
-          description: Server-side Unix epoch timestamp in milliseconds.
-          example: 1780051223357
-      required:
-      - error
-      - code
-      - message
-      - causedBy
-      - timestamp
-    FlagsResponse:
-      type: object
-      description: Blacklist flags metadata envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        flags:
-          type: array
-          description: Flags consumers can pass to `?blacklistFlags`.
-          items:
-            type: string
-          example:
-          - nsfw
-          - religious
-          - political
-          - racist
-          - sexist
-          - explicit
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - flags
       - timestamp

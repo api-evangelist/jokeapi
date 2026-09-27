@@ -9,16 +9,21 @@ description: JokeAPI is a free, open source REST API that delivers consistently 
   own Git server, with this GitHub repo kept open for issues and the community wrapper-library index.
 url: https://raw.githubusercontent.com/api-evangelist/jokeapi/refs/heads/main/apis.yml
 deliveryModel:
-  model: saas
-  open_source: false
+  model: unknown
+  license_evidence:
+    repo: sv443-network/jokeapi
+    spdx: none
+    stars: 285
+  open_source: unknown
   commercial: true
   callable_host: true
-  label: Hosted service · you call their endpoint
-  confidence: high
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-unlicensed
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: free
@@ -37,7 +42,7 @@ tags:
 - Jokes
 - Humor
 - Entertainment
-- Open-Source
+- Open Source
 - REST API
 - Games And Comics
 - Public APIs
@@ -49,6 +54,7 @@ tags_raw:
 - REST API
 - Games And Comics
 - Public APIs
+- Open-Source
 type: Index
 access: 3rd-Party
 position: Consuming

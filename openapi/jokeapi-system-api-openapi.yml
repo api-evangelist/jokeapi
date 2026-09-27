@@ -201,6 +201,23 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    PingResponse:
+      type: object
+      description: Ping envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        ping:
+          type: string
+          example: Pong!
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - ping
+      - timestamp
     EndpointsResponse:
       type: object
       description: Endpoint catalogue envelope.
@@ -244,23 +261,6 @@ components:
       required:
       - error
       - endpoints
-      - timestamp
-    PingResponse:
-      type: object
-      description: Ping envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        ping:
-          type: string
-          example: Pong!
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - ping
       - timestamp
     InfoResponse:
       type: object
