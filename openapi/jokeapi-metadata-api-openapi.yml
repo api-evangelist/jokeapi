@@ -302,31 +302,29 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    FlagsResponse:
+    FormatsResponse:
       type: object
-      description: Blacklist flags metadata envelope.
+      description: Response-format metadata envelope.
       properties:
         error:
           type: boolean
           example: false
-        flags:
+        formats:
           type: array
-          description: Flags consumers can pass to `?blacklistFlags`.
+          description: Response formats accepted by `?format`.
           items:
             type: string
           example:
-          - nsfw
-          - religious
-          - political
-          - racist
-          - sexist
-          - explicit
+          - json
+          - xml
+          - yaml
+          - txt
         timestamp:
           type: integer
           example: 1780051223357
       required:
       - error
-      - flags
+      - formats
       - timestamp
     CategoriesResponse:
       type: object
@@ -368,29 +366,23 @@ components:
       - error
       - categories
       - timestamp
-    FormatsResponse:
+    LangcodeResponse:
       type: object
-      description: Response-format metadata envelope.
+      description: Language-code resolution envelope.
       properties:
         error:
           type: boolean
           example: false
-        formats:
-          type: array
-          description: Response formats accepted by `?format`.
-          items:
-            type: string
-          example:
-          - json
-          - xml
-          - yaml
-          - txt
+        code:
+          type: string
+          description: Resolved ISO 639-1 language code.
+          example: de
         timestamp:
           type: integer
           example: 1780051223357
       required:
       - error
-      - formats
+      - code
       - timestamp
     JokeError:
       type: object
@@ -432,23 +424,31 @@ components:
       - message
       - causedBy
       - timestamp
-    LangcodeResponse:
+    FlagsResponse:
       type: object
-      description: Language-code resolution envelope.
+      description: Blacklist flags metadata envelope.
       properties:
         error:
           type: boolean
           example: false
-        code:
-          type: string
-          description: Resolved ISO 639-1 language code.
-          example: de
+        flags:
+          type: array
+          description: Flags consumers can pass to `?blacklistFlags`.
+          items:
+            type: string
+          example:
+          - nsfw
+          - religious
+          - political
+          - racist
+          - sexist
+          - explicit
         timestamp:
           type: integer
           example: 1780051223357
       required:
       - error
-      - code
+      - flags
       - timestamp
     LanguagesResponse:
       type: object

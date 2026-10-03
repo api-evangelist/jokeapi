@@ -335,63 +335,58 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    JokeFlags:
+    SingleJoke:
       type: object
-      description: Content classification flags carried on every joke.
-      properties:
-        nsfw:
-          type: boolean
-          description: Joke contains adult or explicit sexual content.
-          example: false
-        religious:
-          type: boolean
-          description: Joke references or mocks religion.
-          example: false
-        political:
-          type: boolean
-          description: Joke references politics or political figures.
-          example: false
-        racist:
-          type: boolean
-          description: Joke contains racist content.
-          example: false
-        sexist:
-          type: boolean
-          description: Joke contains sexist content.
-          example: false
-        explicit:
-          type: boolean
-          description: Joke contains explicit language unrelated to NSFW.
-          example: false
-      required:
-      - nsfw
-      - religious
-      - political
-      - racist
-      - sexist
-      - explicit
-    JokeBatch:
-      type: object
-      description: Envelope returned when `?amount` is greater than 1.
+      description: A joke delivered as one line of text.
       properties:
         error:
           type: boolean
+          description: Always false on a successful joke response.
           example: false
-        amount:
+        category:
+          type: string
+          description: Category the joke belongs to.
+          enum:
+          - Misc
+          - Programming
+          - Dark
+          - Pun
+          - Spooky
+          - Christmas
+          example: Programming
+        type:
+          type: string
+          description: Joke shape — always `single` for this schema.
+          enum:
+          - single
+          example: single
+        joke:
+          type: string
+          description: The joke text.
+          example: Why do programmers prefer dark mode? Because light attracts bugs.
+        flags:
+          $ref: '#/components/schemas/JokeFlags'
+        id:
           type: integer
-          description: Number of jokes in this batch.
-          example: 3
-        jokes:
-          type: array
-          description: Heterogeneous list of single and twopart jokes.
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/SingleJoke'
-            - $ref: '#/components/schemas/TwopartJoke'
+          description: Joke identifier within its language scope.
+          example: 42
+        safe:
+          type: boolean
+          description: True when the joke has no flags and is not Dark.
+          example: true
+        lang:
+          type: string
+          description: ISO 639-1 language code of the joke.
+          example: en
       required:
       - error
-      - amount
-      - jokes
+      - category
+      - type
+      - joke
+      - flags
+      - id
+      - safe
+      - lang
     TwopartJoke:
       type: object
       description: A joke delivered as a setup/delivery pair.
@@ -489,25 +484,6 @@ components:
       - message
       - causedBy
       - timestamp
-    SubmissionResponse:
-      type: object
-      description: Submission response envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        message:
-          type: string
-          example: Joke submission was successful.
-        submission:
-          $ref: '#/components/schemas/JokeSubmission'
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - message
-      - timestamp
     JokeSubmission:
       type: object
       description: Submission payload for `POST /submit`.
@@ -558,55 +534,79 @@ components:
       - type
       - flags
       - lang
-    SingleJoke:
+    JokeFlags:
       type: object
-      description: A joke delivered as one line of text.
+      description: Content classification flags carried on every joke.
+      properties:
+        nsfw:
+          type: boolean
+          description: Joke contains adult or explicit sexual content.
+          example: false
+        religious:
+          type: boolean
+          description: Joke references or mocks religion.
+          example: false
+        political:
+          type: boolean
+          description: Joke references politics or political figures.
+          example: false
+        racist:
+          type: boolean
+          description: Joke contains racist content.
+          example: false
+        sexist:
+          type: boolean
+          description: Joke contains sexist content.
+          example: false
+        explicit:
+          type: boolean
+          description: Joke contains explicit language unrelated to NSFW.
+          example: false
+      required:
+      - nsfw
+      - religious
+      - political
+      - racist
+      - sexist
+      - explicit
+    JokeBatch:
+      type: object
+      description: Envelope returned when `?amount` is greater than 1.
       properties:
         error:
           type: boolean
-          description: Always false on a successful joke response.
           example: false
-        category:
-          type: string
-          description: Category the joke belongs to.
-          enum:
-          - Misc
-          - Programming
-          - Dark
-          - Pun
-          - Spooky
-          - Christmas
-          example: Programming
-        type:
-          type: string
-          description: Joke shape — always `single` for this schema.
-          enum:
-          - single
-          example: single
-        joke:
-          type: string
-          description: The joke text.
-          example: Why do programmers prefer dark mode? Because light attracts bugs.
-        flags:
-          $ref: '#/components/schemas/JokeFlags'
-        id:
+        amount:
           type: integer
-          description: Joke identifier within its language scope.
-          example: 42
-        safe:
-          type: boolean
-          description: True when the joke has no flags and is not Dark.
-          example: true
-        lang:
-          type: string
-          description: ISO 639-1 language code of the joke.
-          example: en
+          description: Number of jokes in this batch.
+          example: 3
+        jokes:
+          type: array
+          description: Heterogeneous list of single and twopart jokes.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/SingleJoke'
+            - $ref: '#/components/schemas/TwopartJoke'
       required:
       - error
-      - category
-      - type
-      - joke
-      - flags
-      - id
-      - safe
-      - lang
+      - amount
+      - jokes
+    SubmissionResponse:
+      type: object
+      description: Submission response envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Joke submission was successful.
+        submission:
+          $ref: '#/components/schemas/JokeSubmission'
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - message
+      - timestamp
