@@ -44,7 +44,6 @@ tags:
 - Entertainment
 - Open Source
 - REST API
-- Games And Comics
 - Public APIs
 tags_raw:
 - Jokes
@@ -52,7 +51,6 @@ tags_raw:
 - Entertainment
 - Open Source
 - REST API
-- Games And Comics
 - Public APIs
 - Open-Source
 type: Index
@@ -309,3 +307,5 @@ maintainers:
   email: kin@apievangelist.com
 x-merged-from:
 - joke-api
+x-tags-removed:
+- Games And Comics
