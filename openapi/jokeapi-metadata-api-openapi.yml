@@ -302,6 +302,32 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    FlagsResponse:
+      type: object
+      description: Blacklist flags metadata envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        flags:
+          type: array
+          description: Flags consumers can pass to `?blacklistFlags`.
+          items:
+            type: string
+          example:
+          - nsfw
+          - religious
+          - political
+          - racist
+          - sexist
+          - explicit
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - flags
+      - timestamp
     FormatsResponse:
       type: object
       description: Response-format metadata envelope.
@@ -325,6 +351,24 @@ components:
       required:
       - error
       - formats
+      - timestamp
+    LangcodeResponse:
+      type: object
+      description: Language-code resolution envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        code:
+          type: string
+          description: Resolved ISO 639-1 language code.
+          example: de
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - code
       - timestamp
     CategoriesResponse:
       type: object
@@ -366,24 +410,6 @@ components:
       - error
       - categories
       - timestamp
-    LangcodeResponse:
-      type: object
-      description: Language-code resolution envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        code:
-          type: string
-          description: Resolved ISO 639-1 language code.
-          example: de
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - code
-      - timestamp
     JokeError:
       type: object
       description: Error envelope returned for any failed request.
@@ -423,32 +449,6 @@ components:
       - code
       - message
       - causedBy
-      - timestamp
-    FlagsResponse:
-      type: object
-      description: Blacklist flags metadata envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        flags:
-          type: array
-          description: Flags consumers can pass to `?blacklistFlags`.
-          items:
-            type: string
-          example:
-          - nsfw
-          - religious
-          - political
-          - racist
-          - sexist
-          - explicit
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - flags
       - timestamp
     LanguagesResponse:
       type: object

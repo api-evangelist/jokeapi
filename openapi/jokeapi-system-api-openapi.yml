@@ -201,50 +201,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    EndpointsResponse:
-      type: object
-      description: Endpoint catalogue envelope.
-      properties:
-        error:
-          type: boolean
-          example: false
-        endpoints:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                example: Joke
-              usage:
-                type: object
-                properties:
-                  method:
-                    type: string
-                    example: GET
-                  url:
-                    type: string
-                    example: https://v2.jokeapi.dev/joke/{category}
-                  supportedParams:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                    - format
-                    - blacklistFlags
-                    - type
-                    - contains
-                    - idRange
-                    - amount
-                    - lang
-                    - safe-mode
-        timestamp:
-          type: integer
-          example: 1780051223357
-      required:
-      - error
-      - endpoints
-      - timestamp
     InfoResponse:
       type: object
       description: Runtime info envelope describing JokeAPI's current state.
@@ -340,6 +296,50 @@ components:
       - version
       - jokes
       - formats
+      - timestamp
+    EndpointsResponse:
+      type: object
+      description: Endpoint catalogue envelope.
+      properties:
+        error:
+          type: boolean
+          example: false
+        endpoints:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Joke
+              usage:
+                type: object
+                properties:
+                  method:
+                    type: string
+                    example: GET
+                  url:
+                    type: string
+                    example: https://v2.jokeapi.dev/joke/{category}
+                  supportedParams:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - format
+                    - blacklistFlags
+                    - type
+                    - contains
+                    - idRange
+                    - amount
+                    - lang
+                    - safe-mode
+        timestamp:
+          type: integer
+          example: 1780051223357
+      required:
+      - error
+      - endpoints
       - timestamp
     PingResponse:
       type: object
