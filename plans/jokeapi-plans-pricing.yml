@@ -88,3 +88,29 @@ plans:
       - name: Full source on git.sv443.net (mirrored on GitHub)
       - name: Customizable joke catalogue
       - name: No rate-limit enforcement unless you add one
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - period
+  - request
+  plans:
+  - name: Free (Public)
+    access: freemium
+    model: metered
+    model_how: derived
+    units:
+    - request
+    periods:
+    - per-use
+  - name: Self-Hosted (Open Source)
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - period
+    periods:
+    - month
